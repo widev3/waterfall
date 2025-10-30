@@ -1,0 +1,10 @@
+pandas
+matplotlib
+pyside6
+scipy
+RsInstrument
+visa
+pyvisa-py
+zeroconf
+psutil
+-r despyner/requirements.txt
