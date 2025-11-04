@@ -58,6 +58,7 @@ class Spectrogram(object):
         magnitude = magnitude.drop(index=0)
         magnitude.index -= 1
         magnitude = magnitude.astype(float).values.tolist()
+        magnitude = list(map(list, zip(*magnitude)))
 
         abs_ts, rel_ts = zip(*df.columns)
         abs_ts = abs_ts[1:]

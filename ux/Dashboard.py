@@ -41,13 +41,13 @@ class Dashboard:
         self.ui.verticalLayoutSpec.addWidget(self.__canvas_spec.get_toolbar())
         self.ui.verticalLayoutSpec.addWidget(self.__canvas_spec)
 
-        self.__canvas_time = Mpl2DPlotCanvas(labels=("time", "intensity"))
-        self.ui.verticalLayoutTime.addWidget(self.__canvas_time.get_toolbar())
-        self.ui.verticalLayoutTime.addWidget(self.__canvas_time)
+        self.__canvas_freq = Mpl2DPlotCanvas(labels=("frequency", "intensity"))
+        self.ui.verticalLayoutTime.addWidget(self.__canvas_freq.get_toolbar())
+        self.ui.verticalLayoutTime.addWidget(self.__canvas_freq)
 
-        self.__canvas_freq = Mpl2DPlotCanvas(labels=("intensity", "frequency"))
-        self.ui.verticalLayoutFreq.addWidget(self.__canvas_freq.get_toolbar())
-        self.ui.verticalLayoutFreq.addWidget(self.__canvas_freq)
+        self.__canvas_time = Mpl2DPlotCanvas(labels=("intensity", "time"))
+        self.ui.verticalLayoutFreq.addWidget(self.__canvas_time.get_toolbar())
+        self.ui.verticalLayoutFreq.addWidget(self.__canvas_time)
 
     def __comboBoxOffsetsViewCurrentIndexChanged(self, d):
         self.__lo = self.args["lo"][d]["value"]
@@ -72,23 +72,23 @@ class Dashboard:
         self.__load_track()
 
     def update_slice_canvas(self, data, plot, array, data_exact, span):
-        # update time plot
+        # update freq plot
         time = self.__spec.time_slice(array[1])
-        xy = zip(self.__spec.spec["r"], time)
+        xy = zip(self.__spec.spec["f"], time)
         xy = list(filter(lambda x: x[0] >= span[0][0] and x[0] <= span[0][1], xy))
         pwr = sum(list(map(lambda x: 10 ** (x[1] / 10 - 3), xy))) * 10**6
         self.ui.lineEditTPwr.setText("{:e}".format(pwr))
-        self.__canvas_time.set_data(
+        self.__canvas_freq.set_data(
             list(map(lambda x: x[0], xy)), list(map(lambda x: x[1], xy))
         )
 
-        # update freq plot
+        # update time plot
         freq = self.__spec.freq_slice(array[0])
-        xy = zip(freq, self.__spec.spec["f"])
+        xy = zip(freq, self.__spec.spec["r"])
         xy = list(filter(lambda x: x[1] >= span[1][0] and x[1] <= span[1][1], xy))
         pwr = sum(list(map(lambda x: 10 ** (x[0] / 10 - 3), xy))) * 10**6
         self.ui.lineEditFPwr.setText("{:e}".format(pwr))
-        self.__canvas_freq.set_data(
+        self.__canvas_time.set_data(
             list(map(lambda x: x[0], xy)), list(map(lambda x: x[1], xy))
         )
 

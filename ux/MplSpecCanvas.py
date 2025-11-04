@@ -10,12 +10,12 @@ from matplotlib.backends.backend_qt5agg import (
 class MplSpecCanvas(FigureCanvasQTAgg):
     def __init__(self, button_press_event=None):
         self.__button_press_event = button_press_event
-        self.__x = None
+        self.__ms_ev = None
 
         self.fig = Figure()
         self.axes = self.fig.add_subplot(111)
-        self.axes.set_xlabel("time")
-        self.axes.set_ylabel("frequency")
+        self.axes.set_xlabel("frequency")
+        self.axes.set_ylabel("time")
 
         self.__xlim = self.axes.get_xlim()
         self.__ylim = self.axes.get_ylim()
@@ -45,20 +45,20 @@ class MplSpecCanvas(FigureCanvasQTAgg):
             interpolation="none",
             origin="lower",
             extent=[
-                min(self.__sp["r"]),
-                max(self.__sp["r"]),
                 min(self.__sp["f"]),
                 max(self.__sp["f"]),
+                min(self.__sp["r"]),
+                max(self.__sp["r"]),
             ],
         )
 
-        mx = min(self.__sp["r"])
-        Mx = max(self.__sp["r"])
+        mx = min(self.__sp["f"])
+        Mx = max(self.__sp["f"])
         self.axes.set_xticks(np.arange(mx, Mx, (Mx - mx) / 10))
         self.axes.set_xticks(np.arange(mx, Mx, (Mx - mx) / 30), minor=True)
 
-        my = min(self.__sp["f"])
-        My = max(self.__sp["f"])
+        my = min(self.__sp["r"])
+        My = max(self.__sp["r"])
         self.axes.set_yticks(np.arange(my, My, (My - my) / 10))
         self.axes.set_yticks(np.arange(my, My, (My - my) / 30), minor=True)
 
@@ -72,17 +72,17 @@ class MplSpecCanvas(FigureCanvasQTAgg):
         def get_idx(arr, val):
             return list(filter(lambda y: val >= y[1], enumerate(arr)))[-1]
 
-        self.__x = x if x else self.__x
-        if self.__button_press_event and self.__x:
-            idx_x = get_idx(self.__sp["r"], self.__x.xdata)
-            idx_y = get_idx(self.__sp["f"], self.__x.ydata)
+        self.__ms_ev = x if x else self.__ms_ev
+        if self.__button_press_event and self.__ms_ev:
+            idx_x = get_idx(self.__sp["f"], self.__ms_ev.xdata)
+            idx_y = get_idx(self.__sp["r"], self.__ms_ev.ydata)
 
-            data = (self.__x.xdata, self.__x.ydata)  # respect of plot data (interpol)
-            plot = (self.__x.x, self.__x.y)  # respect of plot frame
-            array = (idx_x[0], idx_y[0])  # respect of array indices
-            data_exact = (idx_x[1], idx_y[1])  # respect of plot data (no interpol)
+            data = (self.__ms_ev.xdata, self.__ms_ev.ydata)  # wr plot data
+            plot = (self.__ms_ev.x, self.__ms_ev.y)  # wr plot frame
+            array = (idx_x[0], idx_y[0])  # wr array indices
+            data_exact = (idx_x[1], idx_y[1])  # wr plot data
 
-            span = (self.__xlim, self.__ylim)  # respect of plot data (interpol)
+            span = (self.__xlim, self.__ylim)  # wr plot data
             self.__button_press_event(data, plot, array, data_exact, span)
 
     def __internal_xlim_changed(self, x):

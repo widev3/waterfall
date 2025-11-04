@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1040</width>
+    <width>885</width>
     <height>726</height>
    </rect>
   </property>
@@ -485,7 +485,7 @@
    </font>
   </property>
   <property name="windowTitle">
-   <string>Whistle Of Wind</string>
+   <string>Wide3 Waterfall</string>
   </property>
   <property name="sizeGripEnabled">
    <bool>false</bool>
