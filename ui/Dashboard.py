@@ -63,158 +63,7 @@ class Ui_Dialog(object):
     def setupUi(self, Dialog):
         if not Dialog.objectName():
             Dialog.setObjectName("Dialog")
-        Dialog.resize(885, 726)
-        palette = QPalette()
-        brush = QBrush(QColor(255, 255, 255, 255))
-        brush.setStyle(Qt.BrushStyle.SolidPattern)
-        palette.setBrush(
-            QPalette.ColorGroup.Active, QPalette.ColorRole.WindowText, brush
-        )
-        brush1 = QBrush(QColor(0, 25, 75, 255))
-        brush1.setStyle(Qt.BrushStyle.SolidPattern)
-        palette.setBrush(QPalette.ColorGroup.Active, QPalette.ColorRole.Button, brush1)
-        brush2 = QBrush(QColor(0, 37, 112, 255))
-        brush2.setStyle(Qt.BrushStyle.SolidPattern)
-        palette.setBrush(QPalette.ColorGroup.Active, QPalette.ColorRole.Light, brush2)
-        brush3 = QBrush(QColor(0, 31, 93, 255))
-        brush3.setStyle(Qt.BrushStyle.SolidPattern)
-        palette.setBrush(
-            QPalette.ColorGroup.Active, QPalette.ColorRole.Midlight, brush3
-        )
-        brush4 = QBrush(QColor(0, 12, 37, 255))
-        brush4.setStyle(Qt.BrushStyle.SolidPattern)
-        palette.setBrush(QPalette.ColorGroup.Active, QPalette.ColorRole.Dark, brush4)
-        brush5 = QBrush(QColor(0, 17, 50, 255))
-        brush5.setStyle(Qt.BrushStyle.SolidPattern)
-        palette.setBrush(QPalette.ColorGroup.Active, QPalette.ColorRole.Mid, brush5)
-        palette.setBrush(QPalette.ColorGroup.Active, QPalette.ColorRole.Text, brush)
-        palette.setBrush(
-            QPalette.ColorGroup.Active, QPalette.ColorRole.BrightText, brush
-        )
-        palette.setBrush(
-            QPalette.ColorGroup.Active, QPalette.ColorRole.ButtonText, brush
-        )
-        brush6 = QBrush(QColor(0, 0, 0, 255))
-        brush6.setStyle(Qt.BrushStyle.SolidPattern)
-        palette.setBrush(QPalette.ColorGroup.Active, QPalette.ColorRole.Base, brush6)
-        palette.setBrush(QPalette.ColorGroup.Active, QPalette.ColorRole.Window, brush1)
-        palette.setBrush(QPalette.ColorGroup.Active, QPalette.ColorRole.Shadow, brush6)
-        palette.setBrush(
-            QPalette.ColorGroup.Active, QPalette.ColorRole.AlternateBase, brush4
-        )
-        brush7 = QBrush(QColor(255, 255, 220, 255))
-        brush7.setStyle(Qt.BrushStyle.SolidPattern)
-        palette.setBrush(
-            QPalette.ColorGroup.Active, QPalette.ColorRole.ToolTipBase, brush7
-        )
-        palette.setBrush(
-            QPalette.ColorGroup.Active, QPalette.ColorRole.ToolTipText, brush6
-        )
-        brush8 = QBrush(QColor(255, 255, 255, 127))
-        brush8.setStyle(Qt.BrushStyle.SolidPattern)
-        # if QT_VERSION >= QT_VERSION_CHECK(5, 12, 0)
-        palette.setBrush(
-            QPalette.ColorGroup.Active, QPalette.ColorRole.PlaceholderText, brush8
-        )
-        # endif
-        # if QT_VERSION >= QT_VERSION_CHECK(6, 6, 0)
-        palette.setBrush(QPalette.ColorGroup.Active, QPalette.ColorRole.Accent, brush6)
-        # endif
-        palette.setBrush(
-            QPalette.ColorGroup.Inactive, QPalette.ColorRole.WindowText, brush
-        )
-        palette.setBrush(
-            QPalette.ColorGroup.Inactive, QPalette.ColorRole.Button, brush1
-        )
-        palette.setBrush(QPalette.ColorGroup.Inactive, QPalette.ColorRole.Light, brush2)
-        palette.setBrush(
-            QPalette.ColorGroup.Inactive, QPalette.ColorRole.Midlight, brush3
-        )
-        palette.setBrush(QPalette.ColorGroup.Inactive, QPalette.ColorRole.Dark, brush4)
-        palette.setBrush(QPalette.ColorGroup.Inactive, QPalette.ColorRole.Mid, brush5)
-        palette.setBrush(QPalette.ColorGroup.Inactive, QPalette.ColorRole.Text, brush)
-        palette.setBrush(
-            QPalette.ColorGroup.Inactive, QPalette.ColorRole.BrightText, brush
-        )
-        palette.setBrush(
-            QPalette.ColorGroup.Inactive, QPalette.ColorRole.ButtonText, brush
-        )
-        palette.setBrush(QPalette.ColorGroup.Inactive, QPalette.ColorRole.Base, brush6)
-        palette.setBrush(
-            QPalette.ColorGroup.Inactive, QPalette.ColorRole.Window, brush1
-        )
-        palette.setBrush(
-            QPalette.ColorGroup.Inactive, QPalette.ColorRole.Shadow, brush6
-        )
-        palette.setBrush(
-            QPalette.ColorGroup.Inactive, QPalette.ColorRole.AlternateBase, brush4
-        )
-        palette.setBrush(
-            QPalette.ColorGroup.Inactive, QPalette.ColorRole.ToolTipBase, brush7
-        )
-        palette.setBrush(
-            QPalette.ColorGroup.Inactive, QPalette.ColorRole.ToolTipText, brush6
-        )
-        # if QT_VERSION >= QT_VERSION_CHECK(5, 12, 0)
-        palette.setBrush(
-            QPalette.ColorGroup.Inactive, QPalette.ColorRole.PlaceholderText, brush8
-        )
-        # endif
-        # if QT_VERSION >= QT_VERSION_CHECK(6, 6, 0)
-        palette.setBrush(
-            QPalette.ColorGroup.Inactive, QPalette.ColorRole.Accent, brush6
-        )
-        # endif
-        palette.setBrush(
-            QPalette.ColorGroup.Disabled, QPalette.ColorRole.WindowText, brush4
-        )
-        palette.setBrush(
-            QPalette.ColorGroup.Disabled, QPalette.ColorRole.Button, brush1
-        )
-        palette.setBrush(QPalette.ColorGroup.Disabled, QPalette.ColorRole.Light, brush2)
-        palette.setBrush(
-            QPalette.ColorGroup.Disabled, QPalette.ColorRole.Midlight, brush3
-        )
-        palette.setBrush(QPalette.ColorGroup.Disabled, QPalette.ColorRole.Dark, brush4)
-        palette.setBrush(QPalette.ColorGroup.Disabled, QPalette.ColorRole.Mid, brush5)
-        palette.setBrush(QPalette.ColorGroup.Disabled, QPalette.ColorRole.Text, brush4)
-        palette.setBrush(
-            QPalette.ColorGroup.Disabled, QPalette.ColorRole.BrightText, brush
-        )
-        palette.setBrush(
-            QPalette.ColorGroup.Disabled, QPalette.ColorRole.ButtonText, brush4
-        )
-        palette.setBrush(QPalette.ColorGroup.Disabled, QPalette.ColorRole.Base, brush1)
-        palette.setBrush(
-            QPalette.ColorGroup.Disabled, QPalette.ColorRole.Window, brush1
-        )
-        palette.setBrush(
-            QPalette.ColorGroup.Disabled, QPalette.ColorRole.Shadow, brush6
-        )
-        palette.setBrush(
-            QPalette.ColorGroup.Disabled, QPalette.ColorRole.AlternateBase, brush1
-        )
-        palette.setBrush(
-            QPalette.ColorGroup.Disabled, QPalette.ColorRole.ToolTipBase, brush7
-        )
-        palette.setBrush(
-            QPalette.ColorGroup.Disabled, QPalette.ColorRole.ToolTipText, brush6
-        )
-        brush9 = QBrush(QColor(0, 12, 37, 127))
-        brush9.setStyle(Qt.BrushStyle.SolidPattern)
-        # if QT_VERSION >= QT_VERSION_CHECK(5, 12, 0)
-        palette.setBrush(
-            QPalette.ColorGroup.Disabled, QPalette.ColorRole.PlaceholderText, brush9
-        )
-        # endif
-        brush10 = QBrush(QColor(0, 17, 53, 255))
-        brush10.setStyle(Qt.BrushStyle.SolidPattern)
-        # if QT_VERSION >= QT_VERSION_CHECK(6, 6, 0)
-        palette.setBrush(
-            QPalette.ColorGroup.Disabled, QPalette.ColorRole.Accent, brush10
-        )
-        # endif
-        Dialog.setPalette(palette)
+        Dialog.resize(1042, 726)
         font = QFont()
         font.setFamilies(["Wix Madefor Display"])
         Dialog.setFont(font)
@@ -227,43 +76,15 @@ class Ui_Dialog(object):
         self.pushButtonFileOpen.setFocusPolicy(Qt.FocusPolicy.NoFocus)
         self.pushButtonFileOpen.setIconSize(QSize(25, 25))
 
-        self.gridLayout.addWidget(
-            self.pushButtonFileOpen, 0, 0, 1, 1, Qt.AlignmentFlag.AlignLeft
-        )
+        self.gridLayout.addWidget(self.pushButtonFileOpen, 0, 0, 1, 1)
 
-        self.framePlotsView = QFrame(Dialog)
-        self.framePlotsView.setObjectName("framePlotsView")
-        self.framePlotsView.setFrameShape(QFrame.Shape.StyledPanel)
-        self.gridLayout_3 = QGridLayout(self.framePlotsView)
-        self.gridLayout_3.setObjectName("gridLayout_3")
-        self.verticalLayoutTime = QVBoxLayout()
-        self.verticalLayoutTime.setObjectName("verticalLayoutTime")
-
-        self.gridLayout_3.addLayout(self.verticalLayoutTime, 1, 1, 1, 1)
-
-        self.verticalLayoutFreq = QVBoxLayout()
-        self.verticalLayoutFreq.setObjectName("verticalLayoutFreq")
-
-        self.gridLayout_3.addLayout(self.verticalLayoutFreq, 0, 2, 1, 1)
-
-        self.verticalSpacer = QSpacerItem(
-            0, 0, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding
-        )
-
-        self.gridLayout_3.addItem(self.verticalSpacer, 0, 0, 1, 1)
-
-        self.verticalLayoutSpec = QVBoxLayout()
-        self.verticalLayoutSpec.setObjectName("verticalLayoutSpec")
-
-        self.gridLayout_3.addLayout(self.verticalLayoutSpec, 0, 1, 1, 1)
-
-        self.horizontalSpacer_4 = QSpacerItem(
-            0, 0, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum
-        )
-
-        self.gridLayout_3.addItem(self.horizontalSpacer_4, 2, 1, 1, 1)
-
-        self.scrollAreaView = QScrollArea(self.framePlotsView)
+        self.frame = QFrame(Dialog)
+        self.frame.setObjectName("frame")
+        self.frame.setFrameShape(QFrame.Shape.StyledPanel)
+        self.frame.setFrameShadow(QFrame.Shadow.Raised)
+        self.gridLayout_2 = QGridLayout(self.frame)
+        self.gridLayout_2.setObjectName("gridLayout_2")
+        self.scrollAreaView = QScrollArea(self.frame)
         self.scrollAreaView.setObjectName("scrollAreaView")
         self.scrollAreaView.setMinimumSize(QSize(300, 0))
         self.scrollAreaView.setMaximumSize(QSize(300, 16777215))
@@ -279,7 +100,7 @@ class Ui_Dialog(object):
         self.scrollAreaView.setWidgetResizable(True)
         self.scrollAreaWidgetContentsView = QWidget()
         self.scrollAreaWidgetContentsView.setObjectName("scrollAreaWidgetContentsView")
-        self.scrollAreaWidgetContentsView.setGeometry(QRect(0, 0, 284, 319))
+        self.scrollAreaWidgetContentsView.setGeometry(QRect(0, 0, 284, 653))
         self.verticalLayout = QVBoxLayout(self.scrollAreaWidgetContentsView)
         self.verticalLayout.setObjectName("verticalLayout")
         self.frame_5 = QFrame(self.scrollAreaWidgetContentsView)
@@ -379,9 +200,20 @@ class Ui_Dialog(object):
 
         self.scrollAreaView.setWidget(self.scrollAreaWidgetContentsView)
 
-        self.gridLayout_3.addWidget(
-            self.scrollAreaView, 1, 2, 1, 1, Qt.AlignmentFlag.AlignRight
+        self.gridLayout_2.addWidget(self.scrollAreaView, 0, 0, 1, 1)
+
+        self.gridLayout.addWidget(self.frame, 1, 0, 1, 1, Qt.AlignmentFlag.AlignLeft)
+
+        self.framePlotsView = QFrame(Dialog)
+        self.framePlotsView.setObjectName("framePlotsView")
+        self.framePlotsView.setFrameShape(QFrame.Shape.StyledPanel)
+        self.gridLayout_3 = QGridLayout(self.framePlotsView)
+        self.gridLayout_3.setObjectName("gridLayout_3")
+        self.horizontalSpacer_4 = QSpacerItem(
+            0, 0, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum
         )
+
+        self.gridLayout_3.addItem(self.horizontalSpacer_4, 2, 1, 1, 1)
 
         self.verticalSpacer_2 = QSpacerItem(
             0, 0, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding
@@ -389,15 +221,35 @@ class Ui_Dialog(object):
 
         self.gridLayout_3.addItem(self.verticalSpacer_2, 1, 0, 1, 1)
 
+        self.verticalLayoutFreq = QVBoxLayout()
+        self.verticalLayoutFreq.setObjectName("verticalLayoutFreq")
+
+        self.gridLayout_3.addLayout(self.verticalLayoutFreq, 0, 2, 1, 1)
+
+        self.verticalLayoutSpec = QVBoxLayout()
+        self.verticalLayoutSpec.setObjectName("verticalLayoutSpec")
+
+        self.gridLayout_3.addLayout(self.verticalLayoutSpec, 0, 1, 1, 1)
+
+        self.verticalSpacer = QSpacerItem(
+            0, 0, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding
+        )
+
+        self.gridLayout_3.addItem(self.verticalSpacer, 0, 0, 1, 1)
+
+        self.verticalLayoutTime = QVBoxLayout()
+        self.verticalLayoutTime.setObjectName("verticalLayoutTime")
+
+        self.gridLayout_3.addLayout(self.verticalLayoutTime, 1, 1, 1, 1)
+
         self.horizontalSpacer_5 = QSpacerItem(
             0, 0, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum
         )
 
         self.gridLayout_3.addItem(self.horizontalSpacer_5, 2, 2, 1, 1)
 
-        self.gridLayout.addWidget(self.framePlotsView, 1, 0, 1, 1)
+        self.gridLayout.addWidget(self.framePlotsView, 1, 1, 1, 1)
 
-        QWidget.setTabOrder(self.scrollAreaView, self.comboBoxOffsetsView)
         QWidget.setTabOrder(self.comboBoxOffsetsView, self.horizontalSliderGammaView)
         QWidget.setTabOrder(self.horizontalSliderGammaView, self.lineEditFilename)
         QWidget.setTabOrder(self.lineEditFilename, self.lineEditTPwr)

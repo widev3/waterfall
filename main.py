@@ -12,7 +12,7 @@ def abs_path(filename, ref_position=__file__):
 
 
 app = QApplication(sys.argv)
-SingletonSplash(abs_path("wide3.png", __file__))
+SingletonSplash(abs_path("wide3.ico", __file__))
 SingletonSplash().message("Loading...")
 
 import Config
