@@ -49,6 +49,10 @@ class Dashboard:
         self.ui.verticalLayoutFreq.addWidget(self.__canvas_time.get_toolbar())
         self.ui.verticalLayoutFreq.addWidget(self.__canvas_time)
 
+        self.__canvas_total = Mpl2DPlotCanvas(labels=("time", "intensity"))
+        self.ui.verticalLayoutTotal.addWidget(self.__canvas_total.get_toolbar())
+        self.ui.verticalLayoutTotal.addWidget(self.__canvas_total)
+
     def __comboBoxOffsetsViewCurrentIndexChanged(self, d):
         self.__lo = self.args["lo"][d]["value"]
         self.__load_track()
@@ -102,3 +106,12 @@ class Dashboard:
             self.__filename, self.args["viewer"]["separator"], self.__lo
         )
         self.__canvas_spec.set_data(self.__spec.spec, self.args["viewer"])
+        self.__canvas_total.set_data(
+            self.__spec.spec["r"],
+            list(
+                map(
+                    lambda xs: sum(10 ** (x / 10 - 3) for x in xs),
+                    self.__spec.spec["m"],
+                )
+            ),
+        )

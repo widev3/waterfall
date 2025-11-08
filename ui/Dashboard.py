@@ -47,6 +47,7 @@ from PySide6.QtWidgets import (
     QDialog,
     QFrame,
     QGridLayout,
+    QGroupBox,
     QLabel,
     QLineEdit,
     QPushButton,
@@ -100,26 +101,19 @@ class Ui_Dialog(object):
         self.scrollAreaView.setWidgetResizable(True)
         self.scrollAreaWidgetContentsView = QWidget()
         self.scrollAreaWidgetContentsView.setObjectName("scrollAreaWidgetContentsView")
-        self.scrollAreaWidgetContentsView.setGeometry(QRect(0, 0, 284, 653))
+        self.scrollAreaWidgetContentsView.setGeometry(QRect(0, 0, 284, 651))
         self.verticalLayout = QVBoxLayout(self.scrollAreaWidgetContentsView)
         self.verticalLayout.setObjectName("verticalLayout")
-        self.frame_5 = QFrame(self.scrollAreaWidgetContentsView)
-        self.frame_5.setObjectName("frame_5")
-        self.frame_5.setFrameShape(QFrame.Shape.StyledPanel)
-        self.frame_5.setFrameShadow(QFrame.Shadow.Plain)
-        self.gridLayout_11 = QGridLayout(self.frame_5)
-        self.gridLayout_11.setObjectName("gridLayout_11")
-        self.labelOffsetsView = QLabel(self.frame_5)
+        self.groupBox_gamma = QGroupBox(self.scrollAreaWidgetContentsView)
+        self.groupBox_gamma.setObjectName("groupBox_gamma")
+        self.gridLayout_4 = QGridLayout(self.groupBox_gamma)
+        self.gridLayout_4.setObjectName("gridLayout_4")
+        self.labelOffsetsView = QLabel(self.groupBox_gamma)
         self.labelOffsetsView.setObjectName("labelOffsetsView")
 
-        self.gridLayout_11.addWidget(self.labelOffsetsView, 0, 0, 1, 1)
+        self.gridLayout_4.addWidget(self.labelOffsetsView, 0, 0, 1, 1)
 
-        self.label_2 = QLabel(self.frame_5)
-        self.label_2.setObjectName("label_2")
-
-        self.gridLayout_11.addWidget(self.label_2, 1, 0, 1, 1)
-
-        self.horizontalSliderGammaView = QSlider(self.frame_5)
+        self.horizontalSliderGammaView = QSlider(self.groupBox_gamma)
         self.horizontalSliderGammaView.setObjectName("horizontalSliderGammaView")
         self.horizontalSliderGammaView.setMaximum(1000)
         self.horizontalSliderGammaView.setSingleStep(1)
@@ -127,19 +121,40 @@ class Ui_Dialog(object):
         self.horizontalSliderGammaView.setSliderPosition(500)
         self.horizontalSliderGammaView.setOrientation(Qt.Orientation.Horizontal)
 
-        self.gridLayout_11.addWidget(self.horizontalSliderGammaView, 1, 1, 1, 1)
+        self.gridLayout_4.addWidget(self.horizontalSliderGammaView, 2, 1, 1, 1)
 
-        self.labelGammaView = QLabel(self.frame_5)
+        self.label_2 = QLabel(self.groupBox_gamma)
+        self.label_2.setObjectName("label_2")
+
+        self.gridLayout_4.addWidget(self.label_2, 2, 0, 1, 1)
+
+        self.labelGammaView = QLabel(self.groupBox_gamma)
         self.labelGammaView.setObjectName("labelGammaView")
 
-        self.gridLayout_11.addWidget(self.labelGammaView, 1, 2, 1, 1)
+        self.gridLayout_4.addWidget(self.labelGammaView, 2, 2, 1, 1)
 
-        self.comboBoxOffsetsView = QComboBox(self.frame_5)
+        self.comboBoxOffsetsView = QComboBox(self.groupBox_gamma)
         self.comboBoxOffsetsView.setObjectName("comboBoxOffsetsView")
 
-        self.gridLayout_11.addWidget(self.comboBoxOffsetsView, 0, 1, 1, 2)
+        self.gridLayout_4.addWidget(self.comboBoxOffsetsView, 0, 1, 1, 2)
 
-        self.verticalLayout.addWidget(self.frame_5)
+        self.verticalLayout.addWidget(self.groupBox_gamma)
+
+        self.groupBox_signals = QGroupBox(self.scrollAreaWidgetContentsView)
+        self.groupBox_signals.setObjectName("groupBox_signals")
+        self.gridLayout_5 = QGridLayout(self.groupBox_signals)
+        self.gridLayout_5.setObjectName("gridLayout_5")
+        self.pushButtonSignal1 = QPushButton(self.groupBox_signals)
+        self.pushButtonSignal1.setObjectName("pushButtonSignal1")
+
+        self.gridLayout_5.addWidget(self.pushButtonSignal1, 0, 0, 1, 1)
+
+        self.pushButtonSignal2 = QPushButton(self.groupBox_signals)
+        self.pushButtonSignal2.setObjectName("pushButtonSignal2")
+
+        self.gridLayout_5.addWidget(self.pushButtonSignal2, 1, 0, 1, 1)
+
+        self.verticalLayout.addWidget(self.groupBox_signals)
 
         self.verticalSpacer_4 = QSpacerItem(
             0, 0, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding
@@ -147,56 +162,54 @@ class Ui_Dialog(object):
 
         self.verticalLayout.addItem(self.verticalSpacer_4)
 
-        self.frame_6 = QFrame(self.scrollAreaWidgetContentsView)
-        self.frame_6.setObjectName("frame_6")
-        self.frame_6.setFrameShape(QFrame.Shape.StyledPanel)
-        self.frame_6.setFrameShadow(QFrame.Shadow.Plain)
-        self.gridLayout_12 = QGridLayout(self.frame_6)
-        self.gridLayout_12.setObjectName("gridLayout_12")
-        self.label_11 = QLabel(self.frame_6)
-        self.label_11.setObjectName("label_11")
-
-        self.gridLayout_12.addWidget(self.label_11, 2, 0, 1, 1)
-
-        self.lineEditFPwr = QLineEdit(self.frame_6)
-        self.lineEditFPwr.setObjectName("lineEditFPwr")
-        self.lineEditFPwr.setReadOnly(True)
-
-        self.gridLayout_12.addWidget(self.lineEditFPwr, 2, 2, 1, 1)
-
-        self.lineEditFilename = QLineEdit(self.frame_6)
-        self.lineEditFilename.setObjectName("lineEditFilename")
-        self.lineEditFilename.setReadOnly(True)
-
-        self.gridLayout_12.addWidget(self.lineEditFilename, 0, 2, 1, 1)
-
-        self.label_9 = QLabel(self.frame_6)
-        self.label_9.setObjectName("label_9")
-
-        self.gridLayout_12.addWidget(self.label_9, 1, 0, 1, 1)
-
-        self.label = QLabel(self.frame_6)
+        self.groupBox_file = QGroupBox(self.scrollAreaWidgetContentsView)
+        self.groupBox_file.setObjectName("groupBox_file")
+        self.gridLayout_6 = QGridLayout(self.groupBox_file)
+        self.gridLayout_6.setObjectName("gridLayout_6")
+        self.label = QLabel(self.groupBox_file)
         self.label.setObjectName("label")
 
-        self.gridLayout_12.addWidget(self.label, 0, 0, 1, 1)
+        self.gridLayout_6.addWidget(self.label, 0, 0, 1, 1)
 
-        self.lineEditTPwr = QLineEdit(self.frame_6)
+        self.label_9 = QLabel(self.groupBox_file)
+        self.label_9.setObjectName("label_9")
+
+        self.gridLayout_6.addWidget(self.label_9, 1, 0, 1, 1)
+
+        self.lineEditTPwr = QLineEdit(self.groupBox_file)
         self.lineEditTPwr.setObjectName("lineEditTPwr")
         self.lineEditTPwr.setReadOnly(True)
 
-        self.gridLayout_12.addWidget(self.lineEditTPwr, 1, 2, 1, 1)
+        self.gridLayout_6.addWidget(self.lineEditTPwr, 1, 1, 1, 1)
 
-        self.label_20 = QLabel(self.frame_6)
+        self.label_20 = QLabel(self.groupBox_file)
         self.label_20.setObjectName("label_20")
 
-        self.gridLayout_12.addWidget(self.label_20, 1, 3, 1, 1)
+        self.gridLayout_6.addWidget(self.label_20, 1, 2, 1, 1)
 
-        self.label_21 = QLabel(self.frame_6)
+        self.label_11 = QLabel(self.groupBox_file)
+        self.label_11.setObjectName("label_11")
+
+        self.gridLayout_6.addWidget(self.label_11, 2, 0, 1, 1)
+
+        self.lineEditFPwr = QLineEdit(self.groupBox_file)
+        self.lineEditFPwr.setObjectName("lineEditFPwr")
+        self.lineEditFPwr.setReadOnly(True)
+
+        self.gridLayout_6.addWidget(self.lineEditFPwr, 2, 1, 1, 1)
+
+        self.label_21 = QLabel(self.groupBox_file)
         self.label_21.setObjectName("label_21")
 
-        self.gridLayout_12.addWidget(self.label_21, 2, 3, 1, 1)
+        self.gridLayout_6.addWidget(self.label_21, 2, 2, 1, 1)
 
-        self.verticalLayout.addWidget(self.frame_6)
+        self.lineEditFilename = QLineEdit(self.groupBox_file)
+        self.lineEditFilename.setObjectName("lineEditFilename")
+        self.lineEditFilename.setReadOnly(True)
+
+        self.gridLayout_6.addWidget(self.lineEditFilename, 0, 1, 1, 2)
+
+        self.verticalLayout.addWidget(self.groupBox_file)
 
         self.scrollAreaView.setWidget(self.scrollAreaWidgetContentsView)
 
@@ -248,12 +261,12 @@ class Ui_Dialog(object):
 
         self.gridLayout_3.addItem(self.horizontalSpacer_5, 2, 2, 1, 1)
 
-        self.gridLayout.addWidget(self.framePlotsView, 1, 1, 1, 1)
+        self.verticalLayoutTotal = QVBoxLayout()
+        self.verticalLayoutTotal.setObjectName("verticalLayoutTotal")
 
-        QWidget.setTabOrder(self.comboBoxOffsetsView, self.horizontalSliderGammaView)
-        QWidget.setTabOrder(self.horizontalSliderGammaView, self.lineEditFilename)
-        QWidget.setTabOrder(self.lineEditFilename, self.lineEditTPwr)
-        QWidget.setTabOrder(self.lineEditTPwr, self.lineEditFPwr)
+        self.gridLayout_3.addLayout(self.verticalLayoutTotal, 1, 2, 1, 1)
+
+        self.gridLayout.addWidget(self.framePlotsView, 1, 1, 1, 1)
 
         self.retranslateUi(Dialog)
 
@@ -268,6 +281,9 @@ class Ui_Dialog(object):
         self.pushButtonFileOpen.setText(
             QCoreApplication.translate("Dialog", "File open", None)
         )
+        self.groupBox_gamma.setTitle(
+            QCoreApplication.translate("Dialog", "Gamma", None)
+        )
         self.labelOffsetsView.setText(
             QCoreApplication.translate("Dialog", "TextLabel", None)
         )
@@ -275,10 +291,20 @@ class Ui_Dialog(object):
         self.labelGammaView.setText(
             QCoreApplication.translate("Dialog", "TextLabel", None)
         )
-        self.label_11.setText(QCoreApplication.translate("Dialog", "f. pwr", None))
-        self.label_9.setText(QCoreApplication.translate("Dialog", "t. pwr", None))
+        self.groupBox_signals.setTitle(
+            QCoreApplication.translate("Dialog", "Signals", None)
+        )
+        self.pushButtonSignal1.setText(
+            QCoreApplication.translate("Dialog", "PushButton", None)
+        )
+        self.pushButtonSignal2.setText(
+            QCoreApplication.translate("Dialog", "PushButton", None)
+        )
+        self.groupBox_file.setTitle(QCoreApplication.translate("Dialog", "File", None))
         self.label.setText(QCoreApplication.translate("Dialog", "Filename", None))
+        self.label_9.setText(QCoreApplication.translate("Dialog", "t. pwr", None))
         self.label_20.setText(QCoreApplication.translate("Dialog", "\u00b5W", None))
+        self.label_11.setText(QCoreApplication.translate("Dialog", "f. pwr", None))
         self.label_21.setText(QCoreApplication.translate("Dialog", "\u00b5W", None))
 
     # retranslateUi
