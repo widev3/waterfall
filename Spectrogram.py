@@ -1,9 +1,9 @@
 import io
 import datetime
-import numpy as np
 import pandas as pd
 from io import StringIO
 from dateutil import parser
+from single_include import numpy as np
 
 
 class Spectrogram(object):

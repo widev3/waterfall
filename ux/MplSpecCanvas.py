@@ -1,6 +1,7 @@
-import numpy as np
 from matplotlib import colors
 from matplotlib.figure import Figure
+from matplotlib.widgets import Cursor
+from single_include import numpy as np
 from matplotlib.backends.backend_qt5agg import (
     FigureCanvasQTAgg,
     NavigationToolbar2QT as NavigationToolbar,
@@ -26,8 +27,10 @@ class MplSpecCanvas(FigureCanvasQTAgg):
         self.axes.callbacks.connect("xlim_changed", self.__internal_xlim_changed)
         self.axes.callbacks.connect("ylim_changed", self.__internal_ylim_changed)
 
+        self.__cursor = Cursor(
+            self.axes, horizOn=True, vertOn=True, color="white", linewidth=1
+        )
         self.im = self.axes.imshow(X=[[]], aspect="auto")
-        # self.__fig.colorbar(self.__im)
         self.fig.tight_layout()
         super().__init__(self.fig)
 
@@ -52,21 +55,29 @@ class MplSpecCanvas(FigureCanvasQTAgg):
             ],
         )
 
-        mx = min(self.__sp["f"])
-        Mx = max(self.__sp["f"])
+        self.__set_ticks()
+        self.fig.tight_layout()
+        self.draw()
+
+    def get_toolbar(self):
+        self.toolbar = NavigationToolbar(self, coordinates=True)
+        return self.toolbar
+
+    def __set_ticks(self):
+        self.__xlim = self.axes.get_xlim()
+        mx = self.__xlim[0]
+        Mx = self.__xlim[1]
         self.axes.set_xticks(np.arange(mx, Mx, (Mx - mx) / 10))
         self.axes.set_xticks(np.arange(mx, Mx, (Mx - mx) / 30), minor=True)
 
-        my = min(self.__sp["r"])
-        My = max(self.__sp["r"])
+        self.__ylim = self.axes.get_ylim()
+        my = self.__ylim[0]
+        My = self.__ylim[1]
         self.axes.set_yticks(np.arange(my, My, (My - my) / 10))
         self.axes.set_yticks(np.arange(my, My, (My - my) / 30), minor=True)
 
         self.axes.grid(which="minor", alpha=0.2)
         self.axes.grid(which="major", alpha=0.5)
-
-        self.fig.tight_layout()
-        self.draw()
 
     def __internal_button_press_event(self, x=None):
         def get_idx(arr, val):
@@ -84,6 +95,7 @@ class MplSpecCanvas(FigureCanvasQTAgg):
 
             span = (self.__xlim, self.__ylim)  # wr plot data
             self.__button_press_event(data, plot, array, data_exact, span)
+            self.__set_ticks()
 
     def __internal_xlim_changed(self, x):
         self.__xlim = self.axes.get_xlim()
@@ -92,7 +104,3 @@ class MplSpecCanvas(FigureCanvasQTAgg):
     def __internal_ylim_changed(self, y):
         self.__ylim = self.axes.get_ylim()
         self.__internal_button_press_event()
-
-    def get_toolbar(self):
-        self.toolbar = NavigationToolbar(self, coordinates=False)
-        return self.toolbar

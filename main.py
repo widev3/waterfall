@@ -16,9 +16,9 @@ SingletonSplash(abs_path("wide3.ico", __file__))
 SingletonSplash().message("Loading...")
 
 import Config
-from despyner.QtMger import WindowManager
 from ui.Dashboard import Ui_Dialog
 from ux.Dashboard import Dashboard
+from despyner.QtMger import WindowManager
 
 if __name__ == "__main__":
     SingletonSplash().message("Starting...")

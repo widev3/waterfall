@@ -125,3 +125,6 @@ from PySide6.QtCore import QThread
 
 SingletonSplash().message("Slot")
 from PySide6.QtCore import Slot
+
+SingletonSplash().message("numpy")
+import numpy
