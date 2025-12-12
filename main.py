@@ -15,7 +15,7 @@ app = QApplication(sys.argv)
 SingletonSplash(abs_path("wide3.ico", __file__))
 SingletonSplash().message("Loading...")
 
-import Config
+import despyner.Config as Config
 from ui.Dashboard import Ui_Dialog
 from ux.Dashboard import Dashboard
 from despyner.QtMger import WindowManager

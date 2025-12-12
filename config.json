@@ -18,20 +18,7 @@
         }
     ],
     "viewer": {
-        "separator": ",",
         "gamma": 0.45,
         "cmap": "berlin"
-    },
-    "controller": {
-        "center": 394300000,
-        "span": 600000,
-        "presets": [
-            {
-                "name": "Full FPC1500",
-                "min": 0,
-                "max": 3000000000,
-                "sweep": 0.5
-            }
-        ]
     }
 }

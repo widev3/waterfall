@@ -1,5 +1,5 @@
 import globals
-from Spectrogram import Spectrogram
+from Spectrogram.Spectrogram import Spectrogram
 
 from ux.Computer import Computer
 from ui.Computer import Ui_Dialog
@@ -77,8 +77,8 @@ class Dashboard:
     def __open_track(self):
         filename, _ = QFileDialog.getOpenFileUrl(
             parent=None,
-            caption="Open Spectrogram CSV",
-            filter="CSV Files (*.csv);;All Files (*)",
+            caption="Open spectrogram",
+            filter="CSV Files (*.csv);;iq Files (*.iq);;cf32 Files (*.cf32);;compressed iq Files (.iq.gz);;compressed cf32 File (*.cf32.gz)",
         )
 
         self.__filename = filename.path() if filename else self.__filename
@@ -114,9 +114,8 @@ class Dashboard:
             return
 
         self.__spec = Spectrogram()
-        self.__spec.read_file(
-            self.__filename, self.args["viewer"]["separator"], self.__lo
-        )
+        self.__spec.read(self.__filename)
+        self.__spec.apply_lo(self.__lo)
         self.__canvas_spec.set_data(self.__spec.spec, self.args["viewer"])
         self.__total_plot.set_data(
             self.__spec.spec["r"],
