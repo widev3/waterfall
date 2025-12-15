@@ -1,32 +1,46 @@
 import os
-from Spectrogram.RSCSVFromSPM import RSCSVFromSPM
-from Spectrogram.IQ import IQ
+from Spectrogram.CSV import read as read_csv
+from Spectrogram.IQ import read as read_iq
 
 
 class Spectrogram(object):
     def __init__(self):
-        self.__driver = None
-        self.__driver_dict = {}
-        self.__driver_dict[".iq"] = IQ()
-        self.__driver_dict[".csv"] = RSCSVFromSPM()
+        self.properties = None
+        self.frequencies = None
+        self.rel_ts = None
+        self.abs_ts = None
+        self.magnitude = None
+        self.um = None
 
     def read(self, filename: str):
         fn, ext = os.path.splitext(filename)
-        self.__driver = self.__driver_dict[ext]
-
-        self.properties, self.frequencies, spectrogram = self.__driver.read(filename)
-        self.rel_ts, self.abs_ts, self.magnitude, self.um = spectrogram
+        if ext == ".csv":
+            (
+                self.properties,
+                self.frequencies,
+                self.rel_ts,
+                self.abs_ts,
+                self.magnitude,
+                self.um,
+            ) = read_csv(filename)
+        elif ext == ".iq":
+            (
+                self.properties,
+                self.frequencies,
+                self.rel_ts,
+                self.abs_ts,
+                self.magnitude,
+                self.um,
+            ) = read_iq(filename)
 
     def time_slice(self, x):
-        return self.spec["m"][x]
+        return self.magnitude[x]
 
     def freq_slice(self, x):
-        return [item[x] for item in self.spec["m"]]
+        return [item[x] for item in self.magnitude]
 
     def apply_lo(self, lo: float):
-        self.__driver.frequencies = list(
-            map(lambda x: x + lo, self.__driver.frequencies)
-        )
+        self.frequencies = list(map(lambda x: x + lo, self.frequencies))
 
     def remove_lo(self, lo: float):
         self.apply_lo(-lo)

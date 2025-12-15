@@ -87,7 +87,7 @@ class Dashboard:
     def update_spec(self, data, plot, array, data_exact, span):
         # update freq plot
         y = self.__spec.time_slice(array[1])
-        xy = zip(self.__spec.spec["f"], y)
+        xy = zip(self.__spec.frequencies, y)
         xy = list(filter(lambda x: x[0] >= span[0][0] and x[0] <= span[0][1], xy))
         x = list(map(lambda x: x[0], xy))
         y = list(map(lambda x: x[1], xy))
@@ -99,7 +99,7 @@ class Dashboard:
 
         # update time plot
         x = self.__spec.freq_slice(array[0])
-        xy = zip(x, self.__spec.spec["r"])
+        xy = zip(x, self.__spec.rel_ts)
         xy = list(filter(lambda x: x[1] >= span[1][0] and x[1] <= span[1][1], xy))
         x = np.array(list(map(lambda x: x[0], xy)))
         y = np.array(list(map(lambda x: x[1], xy)))
@@ -116,17 +116,17 @@ class Dashboard:
         self.__spec = Spectrogram()
         self.__spec.read(self.__filename)
         self.__spec.apply_lo(self.__lo)
-        self.__canvas_spec.set_data(self.__spec.spec, self.args["viewer"])
+        self.__canvas_spec.set_data(self.__spec, self.args["viewer"])
         self.__total_plot.set_data(
-            self.__spec.spec["r"],
-            np.sum(np.power(10, np.array(self.__spec.spec["m"]) / 10 - 3), axis=1),
+            self.__spec.rel_ts,
+            np.sum(np.power(10, np.array(self.__spec.magnitude) / 10 - 3), axis=1),
         )
 
         self.ui.lineEditFilename.setText(self.__filename)
-        self.ui.lineEditTMin.setText("{:e}".format(min(self.__spec.spec["r"])))
-        self.ui.lineEditTMax.setText("{:e}".format(max(self.__spec.spec["r"])))
-        self.ui.lineEditFMin.setText("{:e}".format(min(self.__spec.spec["f"])))
-        self.ui.lineEditFMax.setText("{:e}".format(max(self.__spec.spec["f"])))
+        self.ui.lineEditTMin.setText("{:e}".format(min(self.__spec.rel_ts)))
+        self.ui.lineEditTMax.setText("{:e}".format(max(self.__spec.rel_ts)))
+        self.ui.lineEditFMin.setText("{:e}".format(min(self.__spec.frequencies)))
+        self.ui.lineEditFMax.setText("{:e}".format(max(self.__spec.frequencies)))
 
     def __add_track(self):
         f = f"[{"{:e}".format(self.__freq_plot.xlim[0])}, {"{:e}".format(self.__freq_plot.xlim[1])}] MHz"
