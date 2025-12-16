@@ -23,7 +23,7 @@ class Spectrogram(object):
                 self.magnitude,
                 self.um,
             ) = read_csv(filename)
-        elif ext == ".iq":
+        elif ext in [".iq", ".wav"]:
             (
                 self.properties,
                 self.frequencies,

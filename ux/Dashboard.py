@@ -1,3 +1,4 @@
+import os
 import globals
 from Spectrogram.Spectrogram import Spectrogram
 
@@ -64,7 +65,8 @@ class Dashboard:
 
     def __comboBoxOffsetsViewCurrentIndexChanged(self, d):
         self.__lo = self.args["lo"][d]["value"]
-        self.__load_track()
+        if self.__filename:
+            self.__load_track()
 
     def __horizontalSliderGammaViewValueChanged(self, d):
         d /= 1000
@@ -75,14 +77,27 @@ class Dashboard:
             self.__canvas_spec.fig.canvas.flush_events()
 
     def __open_track(self):
+        supported = {}
+        supported[".csv"] = "CSV"
+        supported[".iq"] = "IQ"
+        supported[".cf32"] = "CF32"
+        supported[".wav"] = "WAV"
+        supported[".iq.gz"] = "GZIP IQ"
+        supported[".cf32.gz"] = "GZIP cf32"
+        supported[".wav.gz"] = "GZIP WAV"
         filename, _ = QFileDialog.getOpenFileUrl(
             parent=None,
-            caption="Open spectrogram",
-            filter="CSV Files (*.csv);;iq Files (*.iq);;cf32 Files (*.cf32);;compressed iq Files (.iq.gz);;compressed cf32 File (*.cf32.gz)",
+            caption="Spectrogram file",
+            filter=";;".join(
+                list(map(lambda x: f"{supported[x]} Files (*{x})", supported.keys()))
+            ),
         )
 
-        self.__filename = filename.path() if filename else self.__filename
-        self.__load_track()
+        if filename:
+            self.__filename = filename.path()
+            self.__load_track()
+        else:
+            self.__filename = None
 
     def update_spec(self, data, plot, array, data_exact, span):
         # update freq plot
@@ -110,9 +125,6 @@ class Dashboard:
         self.ui.lineEditFPwr.setText("{:e}".format(pwr))
 
     def __load_track(self):
-        if not self.__filename:
-            return
-
         self.__spec = Spectrogram()
         self.__spec.read(self.__filename)
         self.__spec.apply_lo(self.__lo)
