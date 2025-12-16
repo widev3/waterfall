@@ -1,3 +1,4 @@
 ubu/
-.csv
-.wav
+*.csv
+*.wav
+*.iq
