@@ -48,6 +48,7 @@ from PySide6.QtWidgets import (
     QFrame,
     QGridLayout,
     QGroupBox,
+    QHBoxLayout,
     QLabel,
     QLineEdit,
     QListWidget,
@@ -66,7 +67,7 @@ class Ui_Dialog(object):
     def setupUi(self, Dialog):
         if not Dialog.objectName():
             Dialog.setObjectName("Dialog")
-        Dialog.resize(1636, 993)
+        Dialog.resize(1166, 530)
         font = QFont()
         font.setFamilies(["Wix Madefor Display"])
         Dialog.setFont(font)
@@ -96,7 +97,7 @@ class Ui_Dialog(object):
         self.scrollAreaView.setWidgetResizable(True)
         self.scrollAreaWidgetContentsView = QWidget()
         self.scrollAreaWidgetContentsView.setObjectName("scrollAreaWidgetContentsView")
-        self.scrollAreaWidgetContentsView.setGeometry(QRect(0, 0, 300, 953))
+        self.scrollAreaWidgetContentsView.setGeometry(QRect(0, 0, 300, 632))
         self.verticalLayout = QVBoxLayout(self.scrollAreaWidgetContentsView)
         self.verticalLayout.setObjectName("verticalLayout")
         self.groupBox_buttons = QGroupBox(self.scrollAreaWidgetContentsView)
@@ -304,49 +305,58 @@ class Ui_Dialog(object):
         self.framePlotsView.setFrameShape(QFrame.Shape.StyledPanel)
         self.gridLayout_3 = QGridLayout(self.framePlotsView)
         self.gridLayout_3.setObjectName("gridLayout_3")
-        self.horizontalSpacer_4 = QSpacerItem(
-            0, 0, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum
-        )
-
-        self.gridLayout_3.addItem(self.horizontalSpacer_4, 2, 1, 1, 1)
-
-        self.verticalSpacer_2 = QSpacerItem(
-            0, 0, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding
-        )
-
-        self.gridLayout_3.addItem(self.verticalSpacer_2, 1, 0, 1, 1)
-
-        self.verticalLayoutFreq = QVBoxLayout()
-        self.verticalLayoutFreq.setObjectName("verticalLayoutFreq")
-
-        self.gridLayout_3.addLayout(self.verticalLayoutFreq, 0, 2, 1, 1)
-
         self.verticalLayoutSpec = QVBoxLayout()
         self.verticalLayoutSpec.setObjectName("verticalLayoutSpec")
 
         self.gridLayout_3.addLayout(self.verticalLayoutSpec, 0, 1, 1, 1)
-
-        self.verticalSpacer = QSpacerItem(
-            0, 0, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding
-        )
-
-        self.gridLayout_3.addItem(self.verticalSpacer, 0, 0, 1, 1)
 
         self.verticalLayoutTime = QVBoxLayout()
         self.verticalLayoutTime.setObjectName("verticalLayoutTime")
 
         self.gridLayout_3.addLayout(self.verticalLayoutTime, 1, 1, 1, 1)
 
-        self.horizontalSpacer_5 = QSpacerItem(
-            0, 0, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum
+        self.horizontalLayoutTotal = QHBoxLayout()
+        self.horizontalLayoutTotal.setObjectName("horizontalLayoutTotal")
+        self.verticalLayoutTotalTime = QVBoxLayout()
+        self.verticalLayoutTotalTime.setObjectName("verticalLayoutTotalTime")
+
+        self.horizontalLayoutTotal.addLayout(self.verticalLayoutTotalTime)
+
+        self.verticalLayoutTotalFreq = QVBoxLayout()
+        self.verticalLayoutTotalFreq.setObjectName("verticalLayoutTotalFreq")
+
+        self.horizontalLayoutTotal.addLayout(self.verticalLayoutTotalFreq)
+
+        self.gridLayout_3.addLayout(self.horizontalLayoutTotal, 1, 2, 1, 1)
+
+        self.verticalSpacer = QSpacerItem(
+            20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding
         )
 
-        self.gridLayout_3.addItem(self.horizontalSpacer_5, 2, 2, 1, 1)
+        self.gridLayout_3.addItem(self.verticalSpacer, 1, 0, 1, 1)
 
-        self.verticalLayoutTotal = QVBoxLayout()
-        self.verticalLayoutTotal.setObjectName("verticalLayoutTotal")
+        self.verticalSpacer_2 = QSpacerItem(
+            20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding
+        )
 
-        self.gridLayout_3.addLayout(self.verticalLayoutTotal, 1, 2, 1, 1)
+        self.gridLayout_3.addItem(self.verticalSpacer_2, 0, 0, 1, 1)
+
+        self.verticalLayoutFreq = QVBoxLayout()
+        self.verticalLayoutFreq.setObjectName("verticalLayoutFreq")
+
+        self.gridLayout_3.addLayout(self.verticalLayoutFreq, 0, 2, 1, 1)
+
+        self.horizontalSpacer = QSpacerItem(
+            40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum
+        )
+
+        self.gridLayout_3.addItem(self.horizontalSpacer, 2, 1, 1, 1)
+
+        self.horizontalSpacer_2 = QSpacerItem(
+            40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum
+        )
+
+        self.gridLayout_3.addItem(self.horizontalSpacer_2, 2, 2, 1, 1)
 
         self.gridLayout.addWidget(self.framePlotsView, 0, 1, 1, 1)
 

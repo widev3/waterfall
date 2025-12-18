@@ -51,17 +51,21 @@ class Dashboard:
         self.ui.verticalLayoutSpec.addWidget(self.__canvas_spec.get_toolbar())
         self.ui.verticalLayoutSpec.addWidget(self.__canvas_spec)
 
-        self.__freq_plot = Mpl2DPlotCanvas(labels=("frequency", "intensity"))
-        self.ui.verticalLayoutTime.addWidget(self.__freq_plot.get_toolbar())
-        self.ui.verticalLayoutTime.addWidget(self.__freq_plot)
+        self.__freq_plt = Mpl2DPlotCanvas(labels=("frequency", "intensity"))
+        self.ui.verticalLayoutTime.addWidget(self.__freq_plt.get_toolbar())
+        self.ui.verticalLayoutTime.addWidget(self.__freq_plt)
 
-        self.__time_plot = Mpl2DPlotCanvas(labels=("intensity", "time"))
-        self.ui.verticalLayoutFreq.addWidget(self.__time_plot.get_toolbar())
-        self.ui.verticalLayoutFreq.addWidget(self.__time_plot)
+        self.__time_plt = Mpl2DPlotCanvas(labels=("intensity", "time"))
+        self.ui.verticalLayoutFreq.addWidget(self.__time_plt.get_toolbar())
+        self.ui.verticalLayoutFreq.addWidget(self.__time_plt)
 
-        self.__total_plot = Mpl2DPlotCanvas(labels=("time", "intensity"))
-        self.ui.verticalLayoutTotal.addWidget(self.__total_plot.get_toolbar())
-        self.ui.verticalLayoutTotal.addWidget(self.__total_plot)
+        self.__tot_freq_plt = Mpl2DPlotCanvas(labels=("time", "intensity"))
+        self.ui.verticalLayoutTotalFreq.addWidget(self.__tot_freq_plt.get_toolbar())
+        self.ui.verticalLayoutTotalFreq.addWidget(self.__tot_freq_plt)
+
+        self.__tot_time_plt = Mpl2DPlotCanvas(labels=("frequency", "intensity"))
+        self.ui.verticalLayoutTotalTime.addWidget(self.__tot_time_plt.get_toolbar())
+        self.ui.verticalLayoutTotalTime.addWidget(self.__tot_time_plt)
 
     def __comboBoxOffsetsViewCurrentIndexChanged(self, d):
         self.__lo = self.args["lo"][d]["value"]
@@ -106,10 +110,10 @@ class Dashboard:
         xy = list(filter(lambda x: x[0] >= span[0][0] and x[0] <= span[0][1], xy))
         x = list(map(lambda x: x[0], xy))
         y = list(map(lambda x: x[1], xy))
-        self.__freq_plot.set_data(x, y)
+        self.__freq_plt.set_data(x, y)
         pwr = sum(np.power(10, np.array(y) / 10 - 3)) * 10**6
-        self.ui.lineEditFMin.setText("{:e}".format(self.__freq_plot.xlim[0]))
-        self.ui.lineEditFMax.setText("{:e}".format(self.__freq_plot.xlim[1]))
+        self.ui.lineEditFMin.setText("{:e}".format(self.__freq_plt.xlim[0]))
+        self.ui.lineEditFMax.setText("{:e}".format(self.__freq_plt.xlim[1]))
         self.ui.lineEditTPwr.setText("{:e}".format(pwr))
 
         # update time plot
@@ -118,10 +122,10 @@ class Dashboard:
         xy = list(filter(lambda x: x[1] >= span[1][0] and x[1] <= span[1][1], xy))
         x = np.array(list(map(lambda x: x[0], xy)))
         y = np.array(list(map(lambda x: x[1], xy)))
-        self.__time_plot.set_data(x, y)
+        self.__time_plt.set_data(x, y)
         pwr = sum(np.power(10, np.array(y) / 10 - 3)) * 10**6
-        self.ui.lineEditTMin.setText("{:e}".format(self.__time_plot.xlim[0]))
-        self.ui.lineEditTMax.setText("{:e}".format(self.__time_plot.xlim[1]))
+        self.ui.lineEditTMin.setText("{:e}".format(self.__time_plt.xlim[0]))
+        self.ui.lineEditTMax.setText("{:e}".format(self.__time_plt.xlim[1]))
         self.ui.lineEditFPwr.setText("{:e}".format(pwr))
 
     def __load_track(self):
@@ -129,9 +133,13 @@ class Dashboard:
         self.__spec.read(self.__filename)
         self.__spec.apply_lo(self.__lo)
         self.__canvas_spec.set_data(self.__spec, self.args["viewer"])
-        self.__total_plot.set_data(
+        self.__tot_freq_plt.set_data(
             self.__spec.rel_ts,
             np.sum(np.power(10, np.array(self.__spec.magnitude) / 10 - 3), axis=1),
+        )
+        self.__tot_time_plt.set_data(
+            self.__spec.frequencies,
+            np.sum(np.power(10, np.array(self.__spec.magnitude) / 10 - 3), axis=0),
         )
 
         self.ui.lineEditFilename.setText(self.__filename)
@@ -141,10 +149,10 @@ class Dashboard:
         self.ui.lineEditFMax.setText("{:e}".format(max(self.__spec.frequencies)))
 
     def __add_track(self):
-        f = f"[{"{:e}".format(self.__freq_plot.xlim[0])}, {"{:e}".format(self.__freq_plot.xlim[1])}] MHz"
-        t = f"[{"{:e}".format(self.__time_plot.xlim[0])}, {"{:e}".format(self.__time_plot.xlim[1])}] sec"
+        f = f"[{"{:e}".format(self.__freq_plt.xlim[0])}, {"{:e}".format(self.__freq_plt.xlim[1])}] MHz"
+        t = f"[{"{:e}".format(self.__time_plt.xlim[0])}, {"{:e}".format(self.__time_plt.xlim[1])}] sec"
         self.ui.listWidgetSignals.addItem(f"{f}, {t}")
-        self.__memory.append((self.__freq_plot.get_data(), self.__time_plot.get_data()))
+        self.__memory.append((self.__freq_plt.get_data(), self.__time_plt.get_data()))
 
     def __remove_track(self):
         print(self.ui.listWidgetSignals)

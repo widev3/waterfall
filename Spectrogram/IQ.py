@@ -5,36 +5,28 @@ from scipy.io import wavfile
 
 def read(filename: str):
     properties = []
-    center_freq = 90.3e6  # Central frequency in Hz
+    center_freq = 90.215e6  # Central frequency in Hz
     sample_rate = 2.4e6  # Sample rate of the IQ data in Hz
 
-    # iq_data = np.fromfile(filename, dtype=np.float32)
-    # iq_data = iq_data[0::2] + 1j * iq_data[1::2]  # Convert to complex
-
     fs, iq_data = wavfile.read(filename)
-    iq_data = iq_data[:, 0] + 1j * iq_data[:, 1]
+    iq = iq_data[:, 0] + 1j * iq_data[:, 1]
 
-    # Compute the spectrogram
     frequencies, abs_ts, magnitude = spectrogram(
-        iq_data,
+        iq,
         fs=sample_rate,
-        nperseg=1024,
-        noverlap=512,
+        window="hann",
+        nperseg=2048,
+        noverlap=1536,
         scaling="density",
         mode="magnitude",
         return_onesided=False,
     )
 
-    frequencies = list(filter(lambda x: not x < 0, frequencies))
+    magnitude = np.fft.fftshift(magnitude, axes=0)
+    frequencies = np.fft.fftshift(frequencies)
     magnitude = list(map(list, zip(*magnitude)))
-    magnitude = list(map(lambda x: x[len(frequencies) :], magnitude))
-
-    # Adjust frequency axis to actual RF frequencies
-    # frequencies = frequencies + center_freq
-    # frequencies = []
+    frequencies = frequencies + np.max(frequencies) + center_freq
     rel_ts = list(map(lambda x: x - abs_ts[0], abs_ts))
-    # abs_ts = []
-    # magnitude = [[]]
     um = []
 
     return properties, frequencies, rel_ts, abs_ts, magnitude, um
