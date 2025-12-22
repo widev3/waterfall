@@ -2,3 +2,6 @@ ubu/
 *.csv
 *.wav
 *.iq
+build/
+dist/
+*.spec

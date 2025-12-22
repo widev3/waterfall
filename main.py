@@ -22,9 +22,17 @@ from despyner.QtMger import WindowManager
 
 if __name__ == "__main__":
     SingletonSplash().message("Starting...")
-    Config.Config("config.json")
-    c = Config.Config().config
-    win = WindowManager(Ui_Dialog, Dashboard, c)
+    default_config = {
+        "lo": [
+            {"value": 0, "band": None},
+            {"value": 5150000000, "band": "C"},
+            {"value": 9750000000, "band": "Ku Tone OFF"},
+            {"value": 10600000000, "band": "Ku Tone ON"},
+        ],
+        "viewer": {"gamma": 0.45, "cmap": "berlin"},
+    }
+    Config.Config("config.json", default_config)
+    win = WindowManager(Ui_Dialog, Dashboard, Config.Config().config)
     win.show()
     SingletonSplash().close()
     sys.exit(app.exec())
