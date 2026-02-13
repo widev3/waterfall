@@ -1,8 +1,6 @@
-import io
 import datetime
 import pandas as pd
 from io import StringIO
-from dateutil import parser
 
 
 def read(filename: str):
@@ -25,70 +23,47 @@ def read(filename: str):
 
         return chunks
 
-    def read_csv_from_spm(chunks):
-        def properties(chunk):
-            df = pd.read_csv(io.StringIO("".join(chunk)), sep=",")
-            return df.set_index("Name").to_dict(orient="index")
+    def spectrogram(chunk):
+        def parse_dt(d):
+            try:
+                return datetime.datetime.strptime(d, "%H:%M:%S:%f").timestamp()
+            except:
+                return None
 
-        def frequencies(chunk):
-            df = pd.read_csv(io.StringIO("".join(chunk)), sep=",")
-            return list(df["Frequency [Hz]"])
+        csv_data = StringIO("\n".join(chunk))
+        df = pd.read_csv(csv_data, header=[0, 1, 2], low_memory=False)
+        df = df.dropna(axis=1, how="any")
+        df = df.apply(pd.to_numeric, errors="coerce")
 
-        def spectrogram(chunk):
-            def parse_dt(d):
-                try:
-                    return parser.parse(d, dayfirst=True).timestamp()
-                except:
-                    try:
-                        return parser.parse(d, dayfirst=False).timestamp()
-                    except:
-                        try:
-                            return datetime.datetime.strptime(
-                                d, "%H:%M:%S:%f"
-                            ).timestamp()
-                        except:
-                            return None
-
-            csv_data = "\n".join(chunk)
-            df = pd.read_csv(StringIO(csv_data), header=[0, 1], low_memory=False)
-            df = df.dropna(axis=1, subset=[df.index[-1]], how="any")
-            magnitude = [[float(x) for x in x[1:]] for x in df.values[1:]]
-            magnitude = list(map(list, zip(*magnitude)))
-
-            abs_ts, rel_ts = zip(*df.columns)
-            abs_ts = list(filter(lambda x: x, list(map(lambda x: parse_dt(x), abs_ts))))
-            rel_ts = list(filter(lambda x: x, list(map(lambda x: parse_dt(x), rel_ts))))
-            rel_ts = list(map(lambda x: rel_ts[0] - x, rel_ts))
-
-            um = {}
-            um["time"] = "ms"
-            um["frequency"] = "Hz"
-            um["magnitude"] = "dBm"
-
-            return rel_ts, abs_ts, magnitude, um
-
-        return properties(chunks[0]), frequencies(chunks[1]), spectrogram(chunks[2])
-
-    def read_csv(content):
-        df = pd.read_csv(io.StringIO("".join(content[0])), sep=",")
-
-        properties = []
-        frequencies = list(map(lambda x: float(x), list(df)[1:]))
-
-        abs_ts = list(map(lambda x: float(x), list(df[df.columns[0]])))
-        rel_ts = rel_ts = list(map(lambda x: x - abs_ts[0], abs_ts))
-        magnitude = [[x for x in x[1:]] for x in df.values]
+        rel_ts = [parse_dt(x[1]) for x in df.columns][1:]
+        rel_ts = [rel_ts[0] - x for x in rel_ts]
+        abs_ts = [x[0] for x in df.columns][1:]
+        freqs = df[df.columns[0]].values
+        mags = df.drop(df.columns[0], axis=1).T.values
 
         um = {}
         um["time"] = "ms"
-        um["frequency"] = "Hz"
-        um["magnitude"] = "dBm"
+        um["frequency"] = df.columns[0][-1].split("[")[-1].split("]")[0]
+        um["magnitude"] = df.columns[1][-1].split("[")[-1].split("]")[0]
 
-        return properties, frequencies, rel_ts, abs_ts, magnitude, um
+        return rel_ts, abs_ts, freqs, mags, um
+
+    def read_csv_from_spm(chunks):
+        def properties(chunk):
+            df = pd.read_csv(StringIO("".join(chunk)), sep=",")
+            return df.set_index("Name").to_dict(orient="index")
+
+        def frequencies(chunk):
+            df = pd.read_csv(StringIO("".join(chunk)), sep=",")
+            return list(df["Frequency [Hz]"])
+
+        p = properties(chunks[0])
+        f = frequencies(chunks[1])
+        s = spectrogram(chunks[2])
+        return p, f, s[0], s[1], s[2], s[3], s[4]
 
     chunks = split_file_by_empty_lines(filename)
     if len(chunks) == 1:
-        return read_csv(chunks)
+        return spectrogram(chunks)
     elif len(chunks) == 3:
-        a = read_csv_from_spm(chunks)
-        return a[0], a[1], a[2][0], a[2][1], a[2][2], a[2][3]
+        return read_csv_from_spm(chunks)

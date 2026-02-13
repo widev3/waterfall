@@ -1,13 +1,11 @@
-import os
 import globals
-from Spectrogram.Spectrogram import Spectrogram
-
 from ux.Computer import Computer
 from ui.Computer import Ui_Dialog
 from despyner.QtMger import WindowManager
 from ux.MplSpecCanvas import MplSpecCanvas
 from despyner.QtMger import set_icon, i_name
 from ux.Mpl2DPlotCanvas import Mpl2DPlotCanvas
+from Spectrogram.Spectrogram import Spectrogram
 from single_include import QFileDialog, Qt, numpy as np
 
 
@@ -44,6 +42,16 @@ class Dashboard:
         self.ui.pushButtonAdd.clicked.connect(self.__add_track)
         self.ui.pushButtonRemove.clicked.connect(self.__remove_track)
         self.ui.pushButtonCompute.clicked.connect(self.__open_signal_computer)
+
+        self.ui.radioButtonISdBm.setChecked(True)
+        self.ui.radioButtonFSLin.setChecked(True)
+        self.ui.radioButtonTSLin.setChecked(True)
+        self.ui.radioButtonISdBm.toggled.connect(self.__ISdBm)
+        self.ui.radioButtonISuW.toggled.connect(self.__ISuW)
+        self.ui.radioButtonFSLin.toggled.connect(self.__FSLin)
+        self.ui.radioButtonFSLog.toggled.connect(self.__FSLog)
+        self.ui.radioButtonTSLin.toggled.connect(self.__TSLin)
+        self.ui.radioButtonTSLog.toggled.connect(self.__TSLog)
 
         self.__canvas_spec = MplSpecCanvas(
             lambda a, b, c, d, e: self.update_spec(a, b, c, d, e)
@@ -106,7 +114,7 @@ class Dashboard:
     def update_spec(self, data, plot, array, data_exact, span):
         # update freq plot
         y = self.__spec.time_slice(array[1])
-        xy = zip(self.__spec.frequencies, y)
+        xy = zip(self.__spec.freqs, y)
         xy = list(filter(lambda x: x[0] >= span[0][0] and x[0] <= span[0][1], xy))
         x = list(map(lambda x: x[0], xy))
         y = list(map(lambda x: x[1], xy))
@@ -135,18 +143,18 @@ class Dashboard:
         self.__canvas_spec.set_data(self.__spec, self.args["viewer"])
         self.__tot_freq_plt.set_data(
             self.__spec.rel_ts,
-            np.sum(np.power(10, np.array(self.__spec.magnitude) / 10 - 3), axis=1),
+            np.sum(np.power(10, np.array(self.__spec.mags) / 10 - 3), axis=1),
         )
         self.__tot_time_plt.set_data(
-            self.__spec.frequencies,
-            np.sum(np.power(10, np.array(self.__spec.magnitude) / 10 - 3), axis=0),
+            self.__spec.freqs,
+            np.sum(np.power(10, np.array(self.__spec.mags) / 10 - 3), axis=0),
         )
 
         self.ui.lineEditFilename.setText(self.__filename)
         self.ui.lineEditTMin.setText("{:e}".format(min(self.__spec.rel_ts)))
         self.ui.lineEditTMax.setText("{:e}".format(max(self.__spec.rel_ts)))
-        self.ui.lineEditFMin.setText("{:e}".format(min(self.__spec.frequencies)))
-        self.ui.lineEditFMax.setText("{:e}".format(max(self.__spec.frequencies)))
+        self.ui.lineEditFMin.setText("{:e}".format(min(self.__spec.freqs)))
+        self.ui.lineEditFMax.setText("{:e}".format(max(self.__spec.freqs)))
 
     def __add_track(self):
         f = f"[{"{:e}".format(self.__freq_plt.xlim[0])}, {"{:e}".format(self.__freq_plt.xlim[1])}] MHz"
@@ -161,3 +169,27 @@ class Dashboard:
         args = {"memory": self.__memory, "spec": self.__spec}
         win = WindowManager(ui=Ui_Dialog, ux=Computer, args=args, parent=self.dialog)
         win.show()
+
+    def __ISdBm(self):
+        if self.ui.radioButtonISdBm.isChecked():
+            print("ISdBm")
+
+    def __ISuW(self):
+        if self.ui.radioButtonISuW.isChecked():
+            print("ISuW")
+
+    def __FSLin(self):
+        if self.ui.radioButtonFSLin.isChecked():
+            print("FSLin")
+
+    def __FSLog(self):
+        if self.ui.radioButtonFSLog.isChecked():
+            print("FSLog")
+
+    def __TSLin(self):
+        if self.ui.radioButtonTSLin.isChecked():
+            print("TSLin")
+
+    def __TSLog(self):
+        if self.ui.radioButtonTSLog.isChecked():
+            print("TSLog")

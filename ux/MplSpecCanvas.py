@@ -37,21 +37,21 @@ class MplSpecCanvas(FigureCanvasQTAgg):
     def set_data(self, sp, conf):
         self.__sp = sp
         self.im = self.axes.imshow(
-            X=self.__sp.magnitude,
+            X=self.__sp.mags,
             norm=colors.PowerNorm(
                 gamma=conf["gamma"],
-                vmin=np.min(self.__sp.magnitude),
-                vmax=np.max(self.__sp.magnitude),
+                vmin=np.min(self.__sp.mags),
+                vmax=np.max(self.__sp.mags),
             ),
             cmap=conf["cmap"],
             aspect="auto",
             interpolation="none",
             origin="lower",
             extent=[
-                min(self.__sp.frequencies),
-                max(self.__sp.frequencies),
-                min(self.__sp.rel_ts),
-                max(self.__sp.rel_ts),
+                np.min(self.__sp.freqs),
+                np.max(self.__sp.freqs),
+                np.min(self.__sp.rel_ts),
+                np.max(self.__sp.rel_ts),
             ],
         )
 
@@ -85,7 +85,7 @@ class MplSpecCanvas(FigureCanvasQTAgg):
 
         self.__ms_ev = x if x else self.__ms_ev
         if self.__button_press_event and self.__ms_ev:
-            idx_x = get_idx(self.__sp.frequencies, self.__ms_ev.xdata)
+            idx_x = get_idx(self.__sp.freqs, self.__ms_ev.xdata)
             idx_y = get_idx(self.__sp.rel_ts, self.__ms_ev.ydata)
 
             data = (self.__ms_ev.xdata, self.__ms_ev.ydata)  # wr plot data

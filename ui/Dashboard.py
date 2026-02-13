@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'dashboard.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.10.0
+## Created by: Qt User Interface Compiler version 6.10.1
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -54,10 +54,12 @@ from PySide6.QtWidgets import (
     QListWidget,
     QListWidgetItem,
     QPushButton,
+    QRadioButton,
     QScrollArea,
     QSizePolicy,
     QSlider,
     QSpacerItem,
+    QTabWidget,
     QVBoxLayout,
     QWidget,
 )
@@ -67,7 +69,7 @@ class Ui_Dialog(object):
     def setupUi(self, Dialog):
         if not Dialog.objectName():
             Dialog.setObjectName("Dialog")
-        Dialog.resize(1166, 530)
+        Dialog.resize(1112, 779)
         font = QFont()
         font.setFamilies(["Wix Madefor Display"])
         Dialog.setFont(font)
@@ -97,21 +99,15 @@ class Ui_Dialog(object):
         self.scrollAreaView.setWidgetResizable(True)
         self.scrollAreaWidgetContentsView = QWidget()
         self.scrollAreaWidgetContentsView.setObjectName("scrollAreaWidgetContentsView")
-        self.scrollAreaWidgetContentsView.setGeometry(QRect(0, 0, 300, 632))
+        self.scrollAreaWidgetContentsView.setGeometry(QRect(0, -103, 300, 842))
         self.verticalLayout = QVBoxLayout(self.scrollAreaWidgetContentsView)
         self.verticalLayout.setObjectName("verticalLayout")
-        self.groupBox_buttons = QGroupBox(self.scrollAreaWidgetContentsView)
-        self.groupBox_buttons.setObjectName("groupBox_buttons")
-        self.gridLayout_7 = QGridLayout(self.groupBox_buttons)
-        self.gridLayout_7.setObjectName("gridLayout_7")
-        self.pushButtonFileOpen = QPushButton(self.groupBox_buttons)
+        self.pushButtonFileOpen = QPushButton(self.scrollAreaWidgetContentsView)
         self.pushButtonFileOpen.setObjectName("pushButtonFileOpen")
         self.pushButtonFileOpen.setFocusPolicy(Qt.FocusPolicy.NoFocus)
         self.pushButtonFileOpen.setIconSize(QSize(25, 25))
 
-        self.gridLayout_7.addWidget(self.pushButtonFileOpen, 0, 0, 1, 1)
-
-        self.verticalLayout.addWidget(self.groupBox_buttons)
+        self.verticalLayout.addWidget(self.pushButtonFileOpen)
 
         self.groupBox_file = QGroupBox(self.scrollAreaWidgetContentsView)
         self.groupBox_file.setObjectName("groupBox_file")
@@ -226,6 +222,54 @@ class Ui_Dialog(object):
 
         self.verticalLayout.addWidget(self.groupBox_file)
 
+        self.groupBox = QGroupBox(self.scrollAreaWidgetContentsView)
+        self.groupBox.setObjectName("groupBox")
+        self.horizontalLayout = QHBoxLayout(self.groupBox)
+        self.horizontalLayout.setObjectName("horizontalLayout")
+        self.radioButtonISdBm = QRadioButton(self.groupBox)
+        self.radioButtonISdBm.setObjectName("radioButtonISdBm")
+
+        self.horizontalLayout.addWidget(self.radioButtonISdBm)
+
+        self.radioButtonISuW = QRadioButton(self.groupBox)
+        self.radioButtonISuW.setObjectName("radioButtonISuW")
+
+        self.horizontalLayout.addWidget(self.radioButtonISuW)
+
+        self.verticalLayout.addWidget(self.groupBox)
+
+        self.groupBox_2 = QGroupBox(self.scrollAreaWidgetContentsView)
+        self.groupBox_2.setObjectName("groupBox_2")
+        self.horizontalLayout_2 = QHBoxLayout(self.groupBox_2)
+        self.horizontalLayout_2.setObjectName("horizontalLayout_2")
+        self.radioButtonFSLin = QRadioButton(self.groupBox_2)
+        self.radioButtonFSLin.setObjectName("radioButtonFSLin")
+
+        self.horizontalLayout_2.addWidget(self.radioButtonFSLin)
+
+        self.radioButtonFSLog = QRadioButton(self.groupBox_2)
+        self.radioButtonFSLog.setObjectName("radioButtonFSLog")
+
+        self.horizontalLayout_2.addWidget(self.radioButtonFSLog)
+
+        self.verticalLayout.addWidget(self.groupBox_2)
+
+        self.groupBox_3 = QGroupBox(self.scrollAreaWidgetContentsView)
+        self.groupBox_3.setObjectName("groupBox_3")
+        self.horizontalLayout_3 = QHBoxLayout(self.groupBox_3)
+        self.horizontalLayout_3.setObjectName("horizontalLayout_3")
+        self.radioButtonTSLin = QRadioButton(self.groupBox_3)
+        self.radioButtonTSLin.setObjectName("radioButtonTSLin")
+
+        self.horizontalLayout_3.addWidget(self.radioButtonTSLin)
+
+        self.radioButtonTSLog = QRadioButton(self.groupBox_3)
+        self.radioButtonTSLog.setObjectName("radioButtonTSLog")
+
+        self.horizontalLayout_3.addWidget(self.radioButtonTSLog)
+
+        self.verticalLayout.addWidget(self.groupBox_3)
+
         self.groupBox_gamma = QGroupBox(self.scrollAreaWidgetContentsView)
         self.groupBox_gamma.setObjectName("groupBox_gamma")
         self.gridLayout_4 = QGridLayout(self.groupBox_gamma)
@@ -310,24 +354,11 @@ class Ui_Dialog(object):
 
         self.gridLayout_3.addLayout(self.verticalLayoutSpec, 0, 1, 1, 1)
 
-        self.verticalLayoutTime = QVBoxLayout()
-        self.verticalLayoutTime.setObjectName("verticalLayoutTime")
+        self.horizontalSpacer_2 = QSpacerItem(
+            40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum
+        )
 
-        self.gridLayout_3.addLayout(self.verticalLayoutTime, 1, 1, 1, 1)
-
-        self.horizontalLayoutTotal = QHBoxLayout()
-        self.horizontalLayoutTotal.setObjectName("horizontalLayoutTotal")
-        self.verticalLayoutTotalTime = QVBoxLayout()
-        self.verticalLayoutTotalTime.setObjectName("verticalLayoutTotalTime")
-
-        self.horizontalLayoutTotal.addLayout(self.verticalLayoutTotalTime)
-
-        self.verticalLayoutTotalFreq = QVBoxLayout()
-        self.verticalLayoutTotalFreq.setObjectName("verticalLayoutTotalFreq")
-
-        self.horizontalLayoutTotal.addLayout(self.verticalLayoutTotalFreq)
-
-        self.gridLayout_3.addLayout(self.horizontalLayoutTotal, 1, 2, 1, 1)
+        self.gridLayout_3.addItem(self.horizontalSpacer_2, 2, 2, 1, 1)
 
         self.verticalSpacer = QSpacerItem(
             20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding
@@ -335,16 +366,15 @@ class Ui_Dialog(object):
 
         self.gridLayout_3.addItem(self.verticalSpacer, 1, 0, 1, 1)
 
-        self.verticalSpacer_2 = QSpacerItem(
-            20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding
-        )
-
-        self.gridLayout_3.addItem(self.verticalSpacer_2, 0, 0, 1, 1)
-
         self.verticalLayoutFreq = QVBoxLayout()
         self.verticalLayoutFreq.setObjectName("verticalLayoutFreq")
 
         self.gridLayout_3.addLayout(self.verticalLayoutFreq, 0, 2, 1, 1)
+
+        self.verticalLayoutTime = QVBoxLayout()
+        self.verticalLayoutTime.setObjectName("verticalLayoutTime")
+
+        self.gridLayout_3.addLayout(self.verticalLayoutTime, 1, 1, 1, 1)
 
         self.horizontalSpacer = QSpacerItem(
             40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum
@@ -352,15 +382,43 @@ class Ui_Dialog(object):
 
         self.gridLayout_3.addItem(self.horizontalSpacer, 2, 1, 1, 1)
 
-        self.horizontalSpacer_2 = QSpacerItem(
-            40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum
+        self.tabWidget = QTabWidget(self.framePlotsView)
+        self.tabWidget.setObjectName("tabWidget")
+        self.tabWidget.setTabPosition(QTabWidget.TabPosition.East)
+        self.tab = QWidget()
+        self.tab.setObjectName("tab")
+        self.gridLayout_7 = QGridLayout(self.tab)
+        self.gridLayout_7.setObjectName("gridLayout_7")
+        self.verticalLayoutTotalFreq = QVBoxLayout()
+        self.verticalLayoutTotalFreq.setObjectName("verticalLayoutTotalFreq")
+
+        self.gridLayout_7.addLayout(self.verticalLayoutTotalFreq, 0, 0, 1, 1)
+
+        self.tabWidget.addTab(self.tab, "")
+        self.tab_2 = QWidget()
+        self.tab_2.setObjectName("tab_2")
+        self.gridLayout_8 = QGridLayout(self.tab_2)
+        self.gridLayout_8.setObjectName("gridLayout_8")
+        self.verticalLayoutTotalTime = QVBoxLayout()
+        self.verticalLayoutTotalTime.setObjectName("verticalLayoutTotalTime")
+
+        self.gridLayout_8.addLayout(self.verticalLayoutTotalTime, 0, 0, 1, 1)
+
+        self.tabWidget.addTab(self.tab_2, "")
+
+        self.gridLayout_3.addWidget(self.tabWidget, 1, 2, 1, 1)
+
+        self.verticalSpacer_2 = QSpacerItem(
+            20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding
         )
 
-        self.gridLayout_3.addItem(self.horizontalSpacer_2, 2, 2, 1, 1)
+        self.gridLayout_3.addItem(self.verticalSpacer_2, 0, 0, 1, 1)
 
         self.gridLayout.addWidget(self.framePlotsView, 0, 1, 1, 1)
 
         self.retranslateUi(Dialog)
+
+        self.tabWidget.setCurrentIndex(1)
 
         QMetaObject.connectSlotsByName(Dialog)
 
@@ -370,7 +428,6 @@ class Ui_Dialog(object):
         Dialog.setWindowTitle(
             QCoreApplication.translate("Dialog", "Wide3 Waterfall", None)
         )
-        self.groupBox_buttons.setTitle("")
         self.pushButtonFileOpen.setText(
             QCoreApplication.translate("Dialog", "File open", None)
         )
@@ -388,6 +445,27 @@ class Ui_Dialog(object):
         self.label.setText(QCoreApplication.translate("Dialog", "Filename", None))
         self.label_10.setText(QCoreApplication.translate("Dialog", "f. max", None))
         self.label_12.setText(QCoreApplication.translate("Dialog", "MHz", None))
+        self.groupBox.setTitle(
+            QCoreApplication.translate("Dialog", "Intensity scale", None)
+        )
+        self.radioButtonISdBm.setText(QCoreApplication.translate("Dialog", "dBm", None))
+        self.radioButtonISuW.setText(
+            QCoreApplication.translate("Dialog", "\u00b5W", None)
+        )
+        self.groupBox_2.setTitle(
+            QCoreApplication.translate("Dialog", "Frequency scale", None)
+        )
+        self.radioButtonFSLin.setText(
+            QCoreApplication.translate("Dialog", "Linear", None)
+        )
+        self.radioButtonFSLog.setText(QCoreApplication.translate("Dialog", "Log", None))
+        self.groupBox_3.setTitle(
+            QCoreApplication.translate("Dialog", "Time scale", None)
+        )
+        self.radioButtonTSLin.setText(
+            QCoreApplication.translate("Dialog", "Linear", None)
+        )
+        self.radioButtonTSLog.setText(QCoreApplication.translate("Dialog", "Log", None))
         self.groupBox_gamma.setTitle(
             QCoreApplication.translate("Dialog", "Gamma", None)
         )
@@ -405,6 +483,14 @@ class Ui_Dialog(object):
         self.pushButtonAdd.setText(QCoreApplication.translate("Dialog", "+", None))
         self.pushButtonCompute.setText(
             QCoreApplication.translate("Dialog", "compute", None)
+        )
+        self.tabWidget.setTabText(
+            self.tabWidget.indexOf(self.tab),
+            QCoreApplication.translate("Dialog", "Frequency", None),
+        )
+        self.tabWidget.setTabText(
+            self.tabWidget.indexOf(self.tab_2),
+            QCoreApplication.translate("Dialog", "Time", None),
         )
 
     # retranslateUi
