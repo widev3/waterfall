@@ -1,7 +1,7 @@
+import numpy as np
 from matplotlib import colors
 from matplotlib.figure import Figure
 from matplotlib.widgets import Cursor
-from single_include import numpy as np
 from matplotlib.backends.backend_qt5agg import (
     FigureCanvasQTAgg,
     NavigationToolbar2QT as NavigationToolbar,

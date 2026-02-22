@@ -39,6 +39,12 @@ class Mpl2DPlotCanvas(FigureCanvasQTAgg):
         self.toolbar = NavigationToolbar(self, coordinates=True)
         return self.toolbar
 
+    def set_scale(self, x=None, y=None):
+        if x:
+            self.__axes.set_xscale(x)
+        if y:
+            self.__axes.set_yscale(y)
+
     def __set_ticks(self):
         self.xlim = self.__axes.get_xlim()
         mx = self.xlim[0]

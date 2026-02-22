@@ -118,8 +118,9 @@ class Dashboard:
         xy = list(filter(lambda x: x[0] >= span[0][0] and x[0] <= span[0][1], xy))
         x = list(map(lambda x: x[0], xy))
         y = list(map(lambda x: x[1], xy))
+        y = np.power(10, np.array(y) / 10 - 3)
         self.__freq_plt.set_data(x, y)
-        pwr = sum(np.power(10, np.array(y) / 10 - 3)) * 10**6
+        pwr = 0  # 10 * np.log(np.sum(np.power(10, np.array(y) / 10 - 3)))
         self.ui.lineEditFMin.setText("{:e}".format(self.__freq_plt.xlim[0]))
         self.ui.lineEditFMax.setText("{:e}".format(self.__freq_plt.xlim[1]))
         self.ui.lineEditTPwr.setText("{:e}".format(pwr))
@@ -131,7 +132,7 @@ class Dashboard:
         x = np.array(list(map(lambda x: x[0], xy)))
         y = np.array(list(map(lambda x: x[1], xy)))
         self.__time_plt.set_data(x, y)
-        pwr = sum(np.power(10, np.array(y) / 10 - 3)) * 10**6
+        pwr = 0  # 10 * np.log(np.sum(np.power(10, np.array(y) / 10 - 3)))
         self.ui.lineEditTMin.setText("{:e}".format(self.__time_plt.xlim[0]))
         self.ui.lineEditTMax.setText("{:e}".format(self.__time_plt.xlim[1]))
         self.ui.lineEditFPwr.setText("{:e}".format(pwr))
@@ -143,11 +144,13 @@ class Dashboard:
         self.__canvas_spec.set_data(self.__spec, self.args["viewer"])
         self.__tot_freq_plt.set_data(
             self.__spec.rel_ts,
-            np.sum(np.power(10, np.array(self.__spec.mags) / 10 - 3), axis=1),
+            10
+            * np.log(np.sum(np.power(10, np.array(self.__spec.mags) / 10 - 3), axis=1)),
         )
         self.__tot_time_plt.set_data(
             self.__spec.freqs,
-            np.sum(np.power(10, np.array(self.__spec.mags) / 10 - 3), axis=0),
+            10
+            * np.log(np.sum(np.power(10, np.array(self.__spec.mags) / 10 - 3), axis=0)),
         )
 
         self.ui.lineEditFilename.setText(self.__filename)
@@ -172,19 +175,19 @@ class Dashboard:
 
     def __ISdBm(self):
         if self.ui.radioButtonISdBm.isChecked():
-            print("ISdBm")
+            self.__tot_time_plt.set_scale("log", "log")
 
     def __ISuW(self):
         if self.ui.radioButtonISuW.isChecked():
-            print("ISuW")
+            self.__tot_time_plt.set_scale("log", "log")
 
     def __FSLin(self):
         if self.ui.radioButtonFSLin.isChecked():
-            print("FSLin")
+            self.__tot_freq_plt.set_scale("log", "log")
 
     def __FSLog(self):
         if self.ui.radioButtonFSLog.isChecked():
-            print("FSLog")
+            self.__tot_freq_plt.set_scale("log", "log")
 
     def __TSLin(self):
         if self.ui.radioButtonTSLin.isChecked():

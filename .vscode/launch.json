@@ -10,7 +10,13 @@
             "request": "launch",
             "program": "main.py",
             "console": "integratedTerminal",
-            "args": []
+            "args": [
+                "--filename",
+                "/home/iki/Downloads/glucosata/csv/g1.csv",
+                "--show",
+                "waterfall intensity",
+                "--i"
+            ]
         }
     ]
 }

@@ -1,4 +1,5 @@
 import os
+import numpy as np
 from Spectrogram.CSV import read as read_csv
 from Spectrogram.IQ import read as read_iq
 
@@ -6,7 +7,6 @@ from Spectrogram.IQ import read as read_iq
 class Spectrogram(object):
     def __init__(self):
         self.properties = None
-        self.frequencies = None
         self.rel_ts = None
         self.abs_ts = None
         self.mags = None
@@ -18,7 +18,6 @@ class Spectrogram(object):
         if ext == ".csv":
             (
                 self.properties,
-                self.frequencies,
                 self.rel_ts,
                 self.abs_ts,
                 self.freqs,
@@ -28,7 +27,6 @@ class Spectrogram(object):
         elif ext in [".iq", ".wav"]:
             (
                 self.properties,
-                self.frequencies,
                 self.rel_ts,
                 self.abs_ts,
                 self.freqs,
@@ -36,14 +34,30 @@ class Spectrogram(object):
                 self.um,
             ) = read_iq(filename)
 
-    def time_slice(self, x):
-        return self.mags[x]
+    def time_slice(self, idx=None, val=None):
+        if idx:
+            return (self.freqs, self.mags[idx])
+        if val:
+            idx = min(range(len(self.rel_ts)), key=lambda i: abs(self.rel_ts[i] - val))
+            return self.time_slice(idx)
 
-    def freq_slice(self, x):
-        return [item[x] for item in self.mags]
+    def freq_slice(self, idx=None, val=None):
+        if idx:
+            return (self.rel_ts, [item[idx] for item in self.mags])
+        if val:
+            idx = min(range(len(self.freqs)), key=lambda i: abs(self.freqs[i] - val))
+            return self.freq_slice(idx)
 
     def apply_lo(self, lo: float):
         self.freqs = list(map(lambda x: x + lo, self.freqs))
 
     def remove_lo(self, lo: float):
         self.apply_lo(-lo)
+
+    def set_scale(self, mag):
+        if mag == "linear":
+            self.mags = np.power(10, self.mags / 10)
+            self.um["mags"] = "mW"
+        elif mag == "log":
+            self.mags = np.log(self.mags)
+            self.um["mags"] = "dBm"

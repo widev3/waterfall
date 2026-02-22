@@ -11,7 +11,7 @@ def read(filename: str):
     fs, iq_data = wavfile.read(filename)
     iq = iq_data[:, 0] + 1j * iq_data[:, 1]
 
-    frequencies, abs_ts, magnitude = spectrogram(
+    freqs, abs_ts, mags = spectrogram(
         iq,
         fs=sample_rate,
         window="hann",
@@ -22,11 +22,11 @@ def read(filename: str):
         return_onesided=False,
     )
 
-    magnitude = np.fft.fftshift(magnitude, axes=0)
-    frequencies = np.fft.fftshift(frequencies)
-    magnitude = list(map(list, zip(*magnitude)))
-    frequencies = frequencies + np.max(frequencies) + center_freq
+    mags = np.fft.fftshift(mags, axes=0)
+    freqs = np.fft.fftshift(freqs)
+    mags = list(map(list, zip(*mags)))
+    freqs = freqs + np.max(freqs) + center_freq
     rel_ts = list(map(lambda x: x - abs_ts[0], abs_ts))
     um = []
 
-    return properties, frequencies, rel_ts, abs_ts, magnitude, um
+    return properties, rel_ts, abs_ts, freqs, mags, um

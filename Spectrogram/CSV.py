@@ -43,8 +43,8 @@ def read(filename: str):
 
         um = {}
         um["time"] = "ms"
-        um["frequency"] = df.columns[0][-1].split("[")[-1].split("]")[0]
-        um["magnitude"] = df.columns[1][-1].split("[")[-1].split("]")[0]
+        um["freqs"] = df.columns[0][-1].split("[")[-1].split("]")[0]
+        um["mags"] = df.columns[1][-1].split("[")[-1].split("]")[0]
 
         return rel_ts, abs_ts, freqs, mags, um
 
@@ -53,14 +53,13 @@ def read(filename: str):
             df = pd.read_csv(StringIO("".join(chunk)), sep=",")
             return df.set_index("Name").to_dict(orient="index")
 
-        def frequencies(chunk):
-            df = pd.read_csv(StringIO("".join(chunk)), sep=",")
-            return list(df["Frequency [Hz]"])
+        # def frequencies(chunk):
+        #     df = pd.read_csv(StringIO("".join(chunk)), sep=",")
+        #     return list(df["Frequency [Hz]"])
 
         p = properties(chunks[0])
-        f = frequencies(chunks[1])
         s = spectrogram(chunks[2])
-        return p, f, s[0], s[1], s[2], s[3], s[4]
+        return p, s[0], s[1], s[2], s[3], s[4]
 
     chunks = split_file_by_empty_lines(filename)
     if len(chunks) == 1:
