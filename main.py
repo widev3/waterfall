@@ -1,40 +1,73 @@
-import sys
-
-sys.dont_write_bytecode = True
-
-# from os import path
-# from PySide6.QtWidgets import QApplication
-# from despyner.SingletonSplash import SingletonSplash
+import argparse
+import func as func
+import Spectrogram.Spectrogram as Spec
 
 
-# def abs_path(filename, ref_position=__file__):
-#     return path.abspath(path.join(path.dirname(ref_position), filename))
+setup = {
+    "filename": {
+        "help": "File to load",
+        "type": str,
+        "default": None,
+        "func": func.read,
+    },
+    "lo": {
+        "help": "Local oscillator [Hz]",
+        "type": float,
+        "default": 0,
+        "func": func.apply_lo,
+    },
+    "show": {
+        "help": "Show plot",
+        "type": str,
+        "default": None,
+        "func": func.show,
+    },
+    "tslice": {
+        "help": "Time or frequency slice",
+        "type": float,
+        "default": None,
+        "func": None,
+    },
+}
 
+parser = argparse.ArgumentParser(description="Waterfall")
+parser.add_argument("--i", help="Interactive mode", action="store_true")
 
-# app = QApplication(sys.argv)
-# SingletonSplash(abs_path("wide3.ico", __file__))
-# SingletonSplash().message("Loading...")
+for s in setup:
+    parser.add_argument(
+        f"-{s[0]}",
+        f"--{s}",
+        help=setup[s]["help"],
+        type=setup[s]["type"],
+        default=setup[s]["default"],
+    )
 
-# import despyner.Config as Config
-# from ui.Dashboard import Ui_Dialog
-# from ux.Dashboard import Dashboard
-# from despyner.QtMger import WindowManager
+args = parser.parse_args()
+spec = Spec.Spectrogram()
 
-# if __name__ == "__main__":
-#     SingletonSplash().message("Starting...")
-#     default_config = {
-#         "lo": [
-#             {"value": 0, "band": None},
-#             {"value": 5150000000, "band": "C"},
-#             {"value": 9750000000, "band": "Ku Tone OFF"},
-#             {"value": 10600000000, "band": "Ku Tone ON"},
-#         ],
-#         "viewer": {"gamma": 0.45, "cmap": "berlin"},
-#     }
-#     Config.Config("config.json", default_config)
-#     win = WindowManager(Ui_Dialog, Dashboard, Config.Config().config)
-#     win.show()
-#     SingletonSplash().close()
-#     sys.exit(app.exec())
+idx = 0
+while True:
+    k = None
+    v = None
+    if args.i:
+        uin = input(f"{(idx+1):03} waterfall> ")
+        uins = uin.split()
+        k = uins[0]
+        if k not in setup:
+            print(f"{k}: command not found")
+            continue
 
-import cli.cli as cli
+        v = uins[1:]
+        v = list(map(lambda x: setup[k]["type"](x), v))
+        v = v[0] if isinstance(v, list) and len(v) == 1 else v
+        setattr(args, k, v)
+    elif idx < len(args.__dict__):
+        k = list(args.__dict__)[idx]
+        v = getattr(args, k)
+    else:
+        break
+
+    idx += 1
+    if k in setup:
+        if setup[k]["func"]:
+            setup[k]["func"](spec, args)

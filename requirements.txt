@@ -1,10 +1,7 @@
 pandas
 matplotlib
-pyside6
 scipy
-RsInstrument
-visa
-pyvisa-py
 zeroconf
 psutil
+python-magic
 -r despyner/requirements.txt

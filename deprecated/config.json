@@ -1,0 +1,24 @@
+{
+    "lo": [
+        {
+            "value": 0,
+            "band": null
+        },
+        {
+            "value": 5150000000,
+            "band": "C"
+        },
+        {
+            "value": 9750000000,
+            "band": "Ku Tone OFF"
+        },
+        {
+            "value": 10600000000,
+            "band": "Ku Tone ON"
+        }
+    ],
+    "viewer": {
+        "gamma": 0.45,
+        "cmap": "berlin"
+    }
+}

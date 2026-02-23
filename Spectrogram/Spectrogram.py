@@ -1,7 +1,8 @@
 import os
+import magic
 import numpy as np
-from Spectrogram.CSV import read as read_csv
 from Spectrogram.IQ import read as read_iq
+from Spectrogram.CSV import read as read_csv
 
 
 class Spectrogram(object):
@@ -11,10 +12,17 @@ class Spectrogram(object):
         self.abs_ts = None
         self.mags = None
         self.freqs = None
+        self.orig_freqs = np.array([])
         self.um = None
 
     def read(self, filename: str):
         fn, ext = os.path.splitext(filename)
+        if not ext:
+            with open(filename, "rb") as f:
+                file_type = magic.from_buffer(f.read(2048), mime=True)
+                if file_type:
+                    ext = f".{file_type.split("/")[-1]}"
+
         if ext == ".csv":
             (
                 self.properties,
@@ -49,7 +57,9 @@ class Spectrogram(object):
             return self.freq_slice(idx)
 
     def apply_lo(self, lo: float):
-        self.freqs = list(map(lambda x: x + lo, self.freqs))
+        if not self.orig_freqs.any():
+            self.orig_freqs = self.freqs
+        self.freqs = list(map(lambda x: x + lo, self.orig_freqs))
 
     def remove_lo(self, lo: float):
         self.apply_lo(-lo)

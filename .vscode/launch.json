@@ -12,7 +12,7 @@
             "console": "integratedTerminal",
             "args": [
                 "--filename",
-                "/home/iki/Downloads/glucosata/csv/g1.csv",
+                "a",
                 "--show",
                 "waterfall intensity",
                 "--i"

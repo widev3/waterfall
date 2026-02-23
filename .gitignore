@@ -1,7 +1,8 @@
-ubu/
+ubu
 *.csv
 *.wav
 *.iq
-build/
-dist/
+build
+dist
 *.spec
+__pycache__
