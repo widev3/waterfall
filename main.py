@@ -1,10 +1,14 @@
+import sys
+
+sys.dont_write_bytecode = True
+
 import argparse
 import func as func
 import Spectrogram.Spectrogram as Spec
 
 
 setup = {
-    "filename": {
+    "dataset": {
         "help": "File to load",
         "type": str,
         "default": None,
@@ -23,15 +27,27 @@ setup = {
         "func": func.show,
     },
     "tslice": {
-        "help": "Time or frequency slice",
+        "help": "Set time slice in the filename unit of measure",
         "type": float,
         "default": None,
         "func": None,
     },
+    "fslice": {
+        "help": "Set frequency slice in the filename unit of measure",
+        "type": float,
+        "default": None,
+        "func": None,
+    },
+    "compute": {
+        "help": "Call the compute module to perform calculations",
+        "type": str,
+        "default": None,
+        "func": func.compute,
+    },
 }
 
 parser = argparse.ArgumentParser(description="Waterfall")
-parser.add_argument("--i", help="Interactive mode", action="store_true")
+parser.add_argument("-i", "--int", help="Interactive mode", action="store_true")
 
 for s in setup:
     parser.add_argument(
@@ -49,7 +65,7 @@ idx = 0
 while True:
     k = None
     v = None
-    if args.i:
+    if args.int:
         uin = input(f"{(idx+1):03} waterfall> ")
         uins = uin.split()
         k = uins[0]
@@ -59,7 +75,6 @@ while True:
 
         v = uins[1:]
         v = list(map(lambda x: setup[k]["type"](x), v))
-        v = v[0] if isinstance(v, list) and len(v) == 1 else v
         setattr(args, k, v)
     elif idx < len(args.__dict__):
         k = list(args.__dict__)[idx]

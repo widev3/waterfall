@@ -11,11 +11,7 @@
             "program": "main.py",
             "console": "integratedTerminal",
             "args": [
-                "--filename",
-                "a",
-                "--show",
-                "waterfall intensity",
-                "--i"
+                "-i"
             ]
         }
     ]

@@ -15,3 +15,30 @@ pyinstaller main.py \
     --add-data=wide3.ico:. \
     --optimize=2
 ```
+
+## Commands tree
+
+- `dataset`
+- `lo`
+- `show`
+  - `waterfall`
+  - `fslice`
+  - `tslice`
+    - `fft`
+  - `ftot`
+  - `ttot`
+- `compute`
+  - `tot`
+  - `max`
+  - `min`
+  <!-- - `fft` -->
+  - `fslice`
+    - `tot`
+    - `max`
+    - `min`
+    <!-- - `fft` -->
+  - `tslice`
+    - `tot`
+    - `max`
+    - `min`
+    <!-- - `fft` -->

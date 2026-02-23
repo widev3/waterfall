@@ -1,6 +1,6 @@
 import numpy as np
-from scipy.signal import spectrogram
 from scipy.io import wavfile
+from scipy.signal import spectrogram
 
 
 def read(filename: str):

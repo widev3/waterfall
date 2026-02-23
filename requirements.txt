@@ -1,7 +1,5 @@
+numpy
+scipy
 pandas
 matplotlib
-scipy
-zeroconf
-psutil
 python-magic
--r despyner/requirements.txt
