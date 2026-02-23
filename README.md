@@ -18,8 +18,12 @@ pyinstaller main.py \
 
 ## Commands tree
 
-- `dataset`
+- `data`
 - `lo`
+- `tslice`
+- `fslice`
+- `frange`
+- `trange`
 - `show`
   - `waterfall`
   - `fslice`

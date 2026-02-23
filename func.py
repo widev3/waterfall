@@ -3,16 +3,19 @@ import matplotlib
 matplotlib.use("QtAgg")
 
 import numpy as np
+import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib.colors as colors
 from matplotlib.ticker import AutoMinorLocator
 
 
-def read(spec, args):
-    spec.read(args.dataset[0])
+def data(spec, args):
+    spec.read(args.data[0])
+    args.frange = [np.min(spec.freqs), np.max(spec.freqs)]
+    args.trange = [np.min(spec.rel_ts), np.max(spec.rel_ts)]
 
 
-def apply_lo(spec, args):
+def lo(spec, args):
     spec.apply_lo(args.lo[0])
 
 
@@ -50,9 +53,18 @@ def compute(spec, args):
             print("fft")
 
 
+def export(spec, args):
+    if len(args.export) == 2 and args.export[0] == "tslice":
+        (x, y) = spec.time_slice(val=args.tslice[0])
+        df = pd.DataFrame(
+            {f"Frequency [{spec.um["freqs"]}]": x, f"Magnitude [{spec.um["mags"]}]": y}
+        )
+        df.to_csv(args.export[1], index=False)
+
+
 def show(spec, args):
     def attributes(ax):
-        ax.set_title(args.dataset[0])
+        ax.set_title(args.data[0])
         ax.minorticks_on()
         ax.xaxis.set_minor_locator(AutoMinorLocator())
         ax.yaxis.set_minor_locator(AutoMinorLocator())
@@ -94,6 +106,9 @@ def show(spec, args):
         attributes(ax)
     elif args.show[0] == "tslice":
         (x, y) = spec.time_slice(val=args.tslice[0])
+        mask = (x >= args.frange[0]) & (x <= args.frange[1])
+        x = x[mask]
+        y = y[mask]
         fig, ax = plt.subplots()
         if len(args.show) > 1:
             if args.show[1] == "fft":
@@ -101,8 +116,8 @@ def show(spec, args):
                 power_watts = np.power(10, np.array(y) / 10)
                 fft_mag = np.fft.fft(power_watts)
                 fft_freq = np.fft.fftfreq(len(power_watts), d=(x[1] - x[0]))
-                x = fft_freq
-                y = np.abs(fft_mag)
+                x = fft_freq[fft_freq > 0]
+                y = np.abs(fft_mag[fft_freq > 0])
             elif args.show[1] == "ifft":
                 pass
         else:
@@ -121,10 +136,8 @@ def show(spec, args):
         ax.set_ylabel(f"Magnitude [{spec.um["mags"]}]")
         attributes(ax)
     elif args.show[0] == "ftot":
-        (x, y) = (
-            spec.freqs,
-            10 * np.log10(np.sum(np.power(10, spec.mags / 10), axis=0)),
-        )
+        x = spec.freqs
+        y = 10 * np.log10(np.sum(np.power(10, spec.mags / 10), axis=0))
         fig, ax = plt.subplots()
         fig.canvas.manager.set_window_title("Total for frequency")
         (line,) = ax.plot(x, y, color="C0", linewidth=1.5)
@@ -132,10 +145,8 @@ def show(spec, args):
         ax.set_ylabel(f"Magnitude [{spec.um["mags"]}]")
         attributes(ax)
     elif args.show[0] == "ttot":
-        (x, y) = (
-            spec.rel_ts,
-            10 * np.log10(np.sum(np.power(10, spec.mags / 10), axis=1)),
-        )
+        x = spec.rel_ts
+        y = 10 * np.log10(np.sum(np.power(10, spec.mags / 10), axis=1))
         fig, ax = plt.subplots()
         fig.canvas.manager.set_window_title("Total for time")
         (line,) = ax.plot(x, y, color="C0", linewidth=1.5)

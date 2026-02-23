@@ -8,17 +8,17 @@ import Spectrogram.Spectrogram as Spec
 
 
 setup = {
-    "dataset": {
+    "data": {
         "help": "File to load",
         "type": str,
         "default": None,
-        "func": func.read,
+        "func": func.data,
     },
     "lo": {
         "help": "Local oscillator [Hz]",
         "type": float,
         "default": 0,
-        "func": func.apply_lo,
+        "func": func.lo,
     },
     "show": {
         "help": "Show plot",
@@ -44,6 +44,24 @@ setup = {
         "default": None,
         "func": func.compute,
     },
+    "export": {
+        "help": "Plot to save in csv",
+        "type": str,
+        "default": None,
+        "func": func.export,
+    },
+    "frange": {
+        "help": "Frequency range",
+        "type": float,
+        "default": None,
+        "func": None,
+    },
+    "trange": {
+        "help": "Time range",
+        "type": float,
+        "default": None,
+        "func": None,
+    },
 }
 
 parser = argparse.ArgumentParser(description="Waterfall")
@@ -51,7 +69,6 @@ parser.add_argument("-i", "--int", help="Interactive mode", action="store_true")
 
 for s in setup:
     parser.add_argument(
-        f"-{s[0]}",
         f"--{s}",
         help=setup[s]["help"],
         type=setup[s]["type"],
