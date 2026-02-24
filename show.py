@@ -7,7 +7,6 @@ import matplotlib.colors as colors
 def waterfall(spec, args):
     fig, ax = plt.subplots()
     fig.canvas.manager.set_window_title("Waterfall")
-    spec = spec.range(args.frange, args.trange)
 
     im = ax.imshow(
         X=spec.mags,
@@ -28,6 +27,7 @@ def waterfall(spec, args):
     ax.set_xlabel(f"Frequency [{spec.um["freqs"]}]")
     ax.set_ylabel(f"Time [{spec.um["time"]}]")
     utils.attributes(ax, args)
+    return spec
 
 
 def tslice(spec, args):
@@ -35,7 +35,7 @@ def tslice(spec, args):
     mask = (x >= args.frange[0]) & (x <= args.frange[1])
     (x, y) = (x[mask], y[mask])
     fig, ax = plt.subplots()
-    if len(args.show) > 1:
+    if len(args.show) == 2:
         if args.show[1] == "fft":
             (x, y) = utils.fft(fig, x, y)
         elif args.show[1] == "ifft":
@@ -47,6 +47,7 @@ def tslice(spec, args):
     ax.set_xlabel(f"Frequency [{spec.um["freqs"]}]")
     ax.set_ylabel(f"Magnitude [{spec.um["mags"]}]")
     utils.attributes(ax, args)
+    return spec
 
 
 def fslice(spec, args):
@@ -59,6 +60,7 @@ def fslice(spec, args):
     ax.set_xlabel(f"Time [{spec.um["time"]}]")
     ax.set_ylabel(f"Magnitude [{spec.um["mags"]}]")
     utils.attributes(ax, args)
+    return spec
 
 
 def ftot(spec, args):
@@ -70,6 +72,7 @@ def ftot(spec, args):
     ax.set_xlabel(f"Frequency [{spec.um["freqs"]}]")
     ax.set_ylabel(f"Magnitude [{spec.um["mags"]}]")
     utils.attributes(ax, args)
+    return spec
 
 
 def ttot(spec, args):
@@ -81,3 +84,4 @@ def ttot(spec, args):
     ax.set_xlabel(f"Time [{spec.um["freqs"]}]")
     ax.set_ylabel(f"Magnitude [{spec.um["mags"]}]")
     utils.attributes(ax, args)
+    return spec

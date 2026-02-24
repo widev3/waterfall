@@ -12,10 +12,22 @@ def data(spec, args):
     spec.read(args.data[0])
     args.frange = [np.min(spec.freqs), np.max(spec.freqs)]
     args.trange = [np.min(spec.rel_ts), np.max(spec.rel_ts)]
+    return spec
 
 
 def lo(spec, args):
     spec.apply_lo(args.lo[0])
+    return spec
+
+
+def trange(spec, args):
+    spec.range(trange=args.trange)
+    return spec
+
+
+def frange(spec, args):
+    spec.range(frange=args.frange)
+    return spec
 
 
 def compute(spec, args):
@@ -54,12 +66,12 @@ def export(spec, args):
 
 def show(spec, args):
     if args.show[0] == "waterfall":
-        _show.waterfall(spec, args)
+        return _show.waterfall(spec, args)
     elif args.show[0] == "tslice":
-        _show.tslice(spec, args)
+        return _show.tslice(spec, args)
     elif args.show[0] == "fslice":
-        _show.fslice(spec, args)
+        return _show.fslice(spec, args)
     elif args.show[0] == "ftot":
-        _show.ftot(spec, args)
+        return _show.ftot(spec, args)
     elif args.show[0] == "ttot":
-        _show.ttot(spec, args)
+        return _show.ttot(spec, args)

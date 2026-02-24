@@ -57,17 +57,19 @@ class Spectrogram(object):
             return self.freq_slice(idx)
 
     def apply_lo(self, lo: float):
-        self.freqs = list(map(lambda x: x + lo, self.freqs))
+        self.freqs = self.freqs + lo
 
-    def range(self, frange, trange):
-        cp = copy.deepcopy(self)
-        fmask = (cp.freqs >= frange[0]) & (cp.freqs <= frange[1])
-        tmask = (cp.rel_ts >= trange[0]) & (cp.rel_ts <= trange[1])
-        cp.mags = cp.mags[np.ix_(tmask, fmask)]
-        cp.freqs = cp.freqs[fmask]
-        cp.rel_ts = cp.rel_ts[tmask]
-        cp.abs_ts = cp.abs_ts[tmask]
-        return cp
+    def range(self, frange=None, trange=None):
+        fmask = [np.True_] * len(self.freqs)
+        tmask = [np.True_] * len(self.rel_ts)
+        if frange:
+            fmask = (self.freqs >= frange[0]) & (self.freqs <= frange[1])
+        if trange:
+            tmask = (self.rel_ts >= trange[0]) & (self.rel_ts <= trange[1])
+        self.mags = self.mags[np.ix_(tmask, fmask)]
+        self.freqs = self.freqs[fmask]
+        self.rel_ts = self.rel_ts[tmask]
+        self.abs_ts = self.abs_ts[tmask]
 
     def set_scale(self, mag):
         if mag == "linear":

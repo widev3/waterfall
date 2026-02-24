@@ -54,13 +54,13 @@ setup = {
         "help": "Frequency range",
         "type": float,
         "default": None,
-        "func": None,
+        "func": commands.frange,
     },
     "trange": {
         "help": "Time range",
         "type": float,
         "default": None,
-        "func": None,
+        "func": commands.trange,
     },
 }
 
@@ -103,4 +103,4 @@ while True:
     if k in setup:
         commands[idx] = (k, v)
         if setup[k]["func"]:
-            setup[k]["func"](spec, args)
+            spec = setup[k]["func"](spec, args)
