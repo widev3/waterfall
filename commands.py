@@ -10,13 +10,15 @@ import show as _show
 
 def data(spec, args):
     spec.read(args.data[0])
-    args.frange = [np.min(spec.freqs), np.max(spec.freqs)]
-    args.trange = [np.min(spec.rel_ts), np.max(spec.rel_ts)]
+    args.frange = np.array([np.min(spec.freqs), np.max(spec.freqs)])
+    args.trange = np.array([np.min(spec.rel_ts), np.max(spec.rel_ts)])
     return spec
 
 
 def lo(spec, args):
     spec.apply_lo(args.lo[0])
+    args.frange += args.lo[0]
+    args.trange += args.lo[0]
     return spec
 
 

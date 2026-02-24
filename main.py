@@ -4,6 +4,7 @@ sys.dont_write_bytecode = True
 
 import argparse
 import commands
+import numpy as np
 import spectrogram.Spectrogram as Spec
 
 
@@ -96,8 +97,7 @@ while True:
         print(f"{(idx):03} \U0001fadf  command not found")
         continue
 
-    v = uins[1:]
-    v = list(map(lambda x: setup[k]["type"](x), v))
+    v = np.array(uins[1:]).astype(setup[k]["type"])
     setattr(args, k, v)
 
     if k in setup:

@@ -62,9 +62,9 @@ class Spectrogram(object):
     def range(self, frange=None, trange=None):
         fmask = [np.True_] * len(self.freqs)
         tmask = [np.True_] * len(self.rel_ts)
-        if frange:
+        if frange is not None:
             fmask = (self.freqs >= frange[0]) & (self.freqs <= frange[1])
-        if trange:
+        if trange is not None:
             tmask = (self.rel_ts >= trange[0]) & (self.rel_ts <= trange[1])
         self.mags = self.mags[np.ix_(tmask, fmask)]
         self.freqs = self.freqs[fmask]
