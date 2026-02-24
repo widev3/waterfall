@@ -1,4 +1,5 @@
 import datetime
+import numpy as np
 import pandas as pd
 from io import StringIO
 
@@ -36,8 +37,8 @@ def read(filename: str):
         df = df.apply(pd.to_numeric, errors="coerce")
 
         rel_ts = [parse_dt(x[1]) for x in df.columns][1:]
-        rel_ts = [rel_ts[0] - x for x in rel_ts]
-        abs_ts = [x[0] for x in df.columns][1:]
+        rel_ts = np.array([rel_ts[0] - x for x in rel_ts])
+        abs_ts = np.array([x[0] for x in df.columns][1:])
         freqs = df[df.columns[0]].values
         mags = df.drop(df.columns[0], axis=1).T.values
 

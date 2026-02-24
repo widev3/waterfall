@@ -18,31 +18,30 @@ pyinstaller main.py \
 
 ## Commands tree
 
-- `data`
-- `lo`
-- `tslice`
-- `fslice`
-- `frange`
-- `trange`
-- `show`
-  - `waterfall`
-  - `fslice`
-  - `tslice`
-    - `fft`
-  - `ftot`
-  - `ttot`
+- `data`      👍
+- `lo`        👍
+- `tslice`    👍
+- `fslice`    👍
+- `frange`    👍
+- `trange`    👍
 - `compute`
   - `tot`
   - `max`
   - `min`
-  <!-- - `fft` -->
   - `fslice`
     - `tot`
     - `max`
     - `min`
-    <!-- - `fft` -->
   - `tslice`
     - `tot`
     - `max`
     - `min`
-    <!-- - `fft` -->
+- `export`
+  - `tslice`
+- `show`
+  - `waterfall`
+  - `tslice`
+    - `fft`
+  - `fslice`
+  - `ftot`
+  - `ttot`

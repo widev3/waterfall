@@ -1,8 +1,9 @@
 import os
+import copy
 import magic
 import numpy as np
-from Spectrogram.IQ import read as read_iq
-from Spectrogram.CSV import read as read_csv
+from spectrogram.iq import read as read_iq
+from spectrogram.csv import read as read_csv
 
 
 class Spectrogram(object):
@@ -12,7 +13,6 @@ class Spectrogram(object):
         self.abs_ts = None
         self.mags = None
         self.freqs = None
-        self.orig_freqs = np.array([])
         self.um = None
 
     def read(self, filename: str):
@@ -51,18 +51,23 @@ class Spectrogram(object):
 
     def freq_slice(self, idx=None, val=None):
         if idx:
-            return (self.rel_ts, [item[idx] for item in self.mags])
+            return (self.rel_ts, self.mags[:, idx])
         if val:
             idx = min(range(len(self.freqs)), key=lambda i: abs(self.freqs[i] - val))
             return self.freq_slice(idx)
 
     def apply_lo(self, lo: float):
-        if not self.orig_freqs.any():
-            self.orig_freqs = self.freqs
-        self.freqs = list(map(lambda x: x + lo, self.orig_freqs))
+        self.freqs = list(map(lambda x: x + lo, self.freqs))
 
-    def remove_lo(self, lo: float):
-        self.apply_lo(-lo)
+    def range(self, frange, trange):
+        cp = copy.deepcopy(self)
+        fmask = (cp.freqs >= frange[0]) & (cp.freqs <= frange[1])
+        tmask = (cp.rel_ts >= trange[0]) & (cp.rel_ts <= trange[1])
+        cp.mags = cp.mags[np.ix_(tmask, fmask)]
+        cp.freqs = cp.freqs[fmask]
+        cp.rel_ts = cp.rel_ts[tmask]
+        cp.abs_ts = cp.abs_ts[tmask]
+        return cp
 
     def set_scale(self, mag):
         if mag == "linear":
