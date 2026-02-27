@@ -4,7 +4,6 @@ sys.dont_write_bytecode = True
 
 import argparse
 import commands
-import numpy as np
 import spectrogram.Spectrogram as Spec
 
 
@@ -31,13 +30,13 @@ setup = {
         "help": "Set time slice in the filename unit of measure",
         "type": float,
         "default": None,
-        "func": None,
+        "func": commands.tslice,
     },
     "fslice": {
         "help": "Set frequency slice in the filename unit of measure",
         "type": float,
         "default": None,
-        "func": None,
+        "func": commands.fslice,
     },
     "compute": {
         "help": "Call the compute module to perform calculations",
@@ -63,18 +62,31 @@ setup = {
         "default": None,
         "func": commands.trange,
     },
+    "int": {
+        "help": "Interactive mode",
+        "action": "store_true",
+        "default": None,
+        "func": None,
+    },
 }
 
 parser = argparse.ArgumentParser(description="Waterfall")
-parser.add_argument("-i", "--int", help="Interactive mode", action="store_true")
 
 for s in setup:
-    parser.add_argument(
-        f"--{s}",
-        help=setup[s]["help"],
-        type=setup[s]["type"],
-        default=setup[s]["default"],
-    )
+    if "type" in setup[s]:
+        parser.add_argument(
+            f"--{s}",
+            help=setup[s]["help"],
+            # type=setup[s]["type"],
+            default=setup[s]["default"],
+        )
+    elif "action" in setup[s]:
+        parser.add_argument(
+            f"--{s}",
+            help=setup[s]["help"],
+            action=setup[s]["action"],
+            default=setup[s]["default"],
+        )
 
 args = parser.parse_args()
 spec = Spec.Spectrogram()
@@ -92,14 +104,18 @@ while True:
         continue
 
     k = uins[0]
+    v = uins[1:]
     if k not in setup:
         idx += 1
-        print(f"{(idx):03} \U0001fadf  command not found")
+        if k in ["help"]:
+            print(f"{(idx):03} \U0001f393 helper")
+            parser.print_help()
+        else:
+            print(f"{(idx):03} \U0001fadf  command not found")
+
         continue
 
-    v = np.array(uins[1:]).astype(setup[k]["type"])
     setattr(args, k, v)
-
     if k in setup:
         commands[idx] = (k, v)
         if setup[k]["func"]:

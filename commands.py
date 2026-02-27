@@ -7,6 +7,8 @@ import numpy as np
 import pandas as pd
 import show as _show
 
+savings = {}
+
 
 def data(spec, args):
     spec.read(args.data[0])
@@ -30,6 +32,14 @@ def trange(spec, args):
 def frange(spec, args):
     spec.range(frange=args.frange)
     return spec
+
+
+def tslice(spec, args):
+    pass
+
+
+def fslice(spec, args):
+    pass
 
 
 def compute(spec, args):

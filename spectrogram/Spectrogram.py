@@ -1,5 +1,4 @@
 import os
-import copy
 import magic
 import numpy as np
 from spectrogram.iq import read as read_iq
