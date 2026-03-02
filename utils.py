@@ -17,8 +17,7 @@ def fft(fig, x, y):
     return (x, y)
 
 
-def attributes(ax, args):
-    ax.set_title(args.data[0])
+def attributes(ax):
     ax.minorticks_on()
     ax.xaxis.set_minor_locator(AutoMinorLocator())
     ax.yaxis.set_minor_locator(AutoMinorLocator())

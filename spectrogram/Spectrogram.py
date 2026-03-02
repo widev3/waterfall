@@ -13,6 +13,8 @@ class Spectrogram(object):
         self.mags = None
         self.freqs = None
         self.um = None
+        self.frange = []
+        self.trange = []
 
     def read(self, filename: str):
         fn, ext = os.path.splitext(filename)
@@ -41,6 +43,8 @@ class Spectrogram(object):
                 self.um,
             ) = read_iq(filename)
 
+        self.range()
+
     def time_slice(self, idx=None, val=None):
         if idx:
             return (self.freqs, self.mags[idx])
@@ -57,6 +61,7 @@ class Spectrogram(object):
 
     def apply_lo(self, lo: float):
         self.freqs = self.freqs + lo
+        self.frange = self.frange + lo
 
     def range(self, frange=None, trange=None):
         fmask = [np.True_] * len(self.freqs)
@@ -69,6 +74,8 @@ class Spectrogram(object):
         self.freqs = self.freqs[fmask]
         self.rel_ts = self.rel_ts[tmask]
         self.abs_ts = self.abs_ts[tmask]
+        self.frange = np.array([np.min(self.freqs), np.max(self.freqs)])
+        self.trange = np.array([np.min(self.rel_ts), np.max(self.rel_ts)])
 
     def set_scale(self, mag):
         if mag == "linear":
