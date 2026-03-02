@@ -6,43 +6,46 @@ import utils
 import numpy as np
 import pandas as pd
 import show as _show
+import spectrogram.Spectrogram as Spec
 
 savings = {}
 
 
-def data(spec, args):
+def data(args):
+    spec = Spec.Spectrogram()
     spec.read(args.data[0])
-    args.frange = np.array([np.min(spec.freqs), np.max(spec.freqs)])
-    args.trange = np.array([np.min(spec.rel_ts), np.max(spec.rel_ts)])
+    savings[args.data[1] if len(args.data) == 2 else "."] = spec
+    # frange = np.array([np.min(spec.freqs), np.max(spec.freqs)])
+    # trange = np.array([np.min(spec.rel_ts), np.max(spec.rel_ts)])
     return spec
 
 
-def lo(spec, args):
+def lo(args):
     spec.apply_lo(args.lo[0])
     args.frange += args.lo[0]
     args.trange += args.lo[0]
     return spec
 
 
-def trange(spec, args):
+def trange(args):
     spec.range(trange=args.trange)
     return spec
 
 
-def frange(spec, args):
+def frange(args):
     spec.range(frange=args.frange)
     return spec
 
 
-def tslice(spec, args):
-    pass
+def tslice(args):
+    savings[args.tslice[1] if len(args.tslice) == 2 else "."].tslice = args.tslice[0]
 
 
-def fslice(spec, args):
-    pass
+def fslice(args):
+    savings[args.fslice[1] if len(args.fslice) == 2 else "."].fslice = args.fslice[0]
 
 
-def compute(spec, args):
+def compute(args):
     if args.compute[0] == "tot":
         print(f"{utils.tot(spec.mags)} {spec.um["mags"]}")
     elif args.compute[0] == "max":
@@ -67,7 +70,7 @@ def compute(spec, args):
             print(f"{np.min(y)} {spec.um["mags"]}")
 
 
-def export(spec, args):
+def export(args):
     if len(args.export) == 2 and args.export[0] == "tslice":
         (x, y) = spec.time_slice(val=args.tslice[0])
         df = pd.DataFrame(
@@ -76,7 +79,7 @@ def export(spec, args):
         df.to_csv(args.export[1], index=False)
 
 
-def show(spec, args):
+def show(args):
     if args.show[0] == "waterfall":
         return _show.waterfall(spec, args)
     elif args.show[0] == "tslice":

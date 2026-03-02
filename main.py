@@ -4,61 +4,51 @@ sys.dont_write_bytecode = True
 
 import argparse
 import commands
-import spectrogram.Spectrogram as Spec
 
 
 setup = {
     "data": {
         "help": "File to load",
-        "type": str,
         "default": None,
         "func": commands.data,
     },
     "lo": {
         "help": "Local oscillator [Hz]",
-        "type": float,
         "default": 0,
         "func": commands.lo,
     },
     "show": {
         "help": "Show plot",
-        "type": str,
         "default": None,
         "func": commands.show,
     },
     "tslice": {
         "help": "Set time slice in the filename unit of measure",
-        "type": float,
         "default": None,
         "func": commands.tslice,
     },
     "fslice": {
         "help": "Set frequency slice in the filename unit of measure",
-        "type": float,
         "default": None,
         "func": commands.fslice,
     },
     "compute": {
         "help": "Call the compute module to perform calculations",
-        "type": str,
         "default": None,
         "func": commands.compute,
     },
     "export": {
         "help": "Plot to save in csv",
-        "type": str,
         "default": None,
         "func": commands.export,
     },
     "frange": {
         "help": "Frequency range",
-        "type": float,
         "default": None,
         "func": commands.frange,
     },
     "trange": {
         "help": "Time range",
-        "type": float,
         "default": None,
         "func": commands.trange,
     },
@@ -70,29 +60,35 @@ setup = {
     },
 }
 
-parser = argparse.ArgumentParser(description="Waterfall")
+# parser = argparse.ArgumentParser(description="Waterfall")
 
-for s in setup:
-    if "type" in setup[s]:
-        parser.add_argument(
-            f"--{s}",
-            help=setup[s]["help"],
-            # type=setup[s]["type"],
-            default=setup[s]["default"],
-        )
-    elif "action" in setup[s]:
-        parser.add_argument(
-            f"--{s}",
-            help=setup[s]["help"],
-            action=setup[s]["action"],
-            default=setup[s]["default"],
-        )
+# for s in setup:
+#     if "type" in setup[s]:
+#         parser.add_argument(
+#             f"--{s}",
+#             help=setup[s]["help"],
+#             default=setup[s]["default"],
+#         )
+#     elif "action" in setup[s]:
+#         parser.add_argument(
+#             f"--{s}",
+#             help=setup[s]["help"],
+#             action=setup[s]["action"],
+#             default=setup[s]["default"],
+#         )
 
-args = parser.parse_args()
-spec = Spec.Spectrogram()
+# args = parser.parse_args()
+
+
+# just an empty class to setattr
+class Empty:
+    pass
+
+
+args = Empty()
 
 idx = 0
-commands = {}
+cmds = {}
 while True:
     k = None
     v = None
@@ -116,7 +112,6 @@ while True:
         continue
 
     setattr(args, k, v)
-    if k in setup:
-        commands[idx] = (k, v)
-        if setup[k]["func"]:
-            spec = setup[k]["func"](spec, args)
+    if k in setup and setup[k]["func"]:
+        cmds[idx] = (k, v)
+        setup[k]["func"](args)
