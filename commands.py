@@ -15,10 +15,10 @@ def nx(prop, l):
     return specs[prop[-1] if len(prop) == l else "."]
 
 
-def data(args):
+def load(args):
     spec = Spec.Spectrogram()
-    spec.read(args.data[0])
-    specs[args.data[1] if len(args.data) == 2 else "."] = spec
+    spec.read(args.load[0])
+    specs[args.load[1] if len(args.load) == 2 else "."] = spec
 
 
 def lo(args):
@@ -69,18 +69,6 @@ def compute(args):
             print(f"{np.max(y)} {spec.um["mags"]}")
         elif args.compute[1] == "min":
             print(f"{np.min(y)} {spec.um["mags"]}")
-
-
-def export(args):
-    print("Not implemented")
-    pass
-    # if len(args.export) == 2 and args.export[0] == "tslice":
-    #     (x, y) = spec.time_slice(val=args.tslice[0])
-    #     df = pd.DataFrame(
-    #         {f"Frequency [{spec.um["freqs"]}]": x, f"Magnitude [{spec.um["mags"]}]": y}
-    #     )
-    #     df.to_csv(args.export[1], index=False)
-
 
 def show(args):
     spec = nx(args.show, 2)

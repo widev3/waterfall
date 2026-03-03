@@ -1,0 +1,25 @@
+load b
+show waterfall
+load b bubu
+show waterfall
+show waterfall bubu
+tslice 130 bubu
+show tslice bubu
+tslice 100 bubu
+show tslice bubu
+tslice 130
+show tslice
+lo 1000000000 
+tslice 130
+show tslice
+tslice 130 bubu
+show tslice bubu
+lo 1000000000
+tslice 130
+show tslice
+tslice 130 bubu
+show tslice bubu
+tslice 100 bubu
+show tslice bubu
+compute tslice tot
+compute tot

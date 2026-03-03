@@ -16,32 +16,34 @@ pyinstaller main.py \
     --optimize=2
 ```
 
-## Commands tree
+## Commands
 
-`data`  
-`lo`  
-`tslice`  
-`fslice`  
-`frange`  
-`trange`  
-`compute`  
-├──`tot`  
-├──`max`  
-├──`min`  
-├──`fslice`  
-│&emsp;&emsp;├──`tot`  
-│&emsp;&emsp;├──`max`  
-│&emsp;&emsp;└──`min`  
-└──`tslice`  
-&emsp;&emsp;├──`tot`  
-&emsp;&emsp;├──`max`  
-&emsp;&emsp;└──`min`  
-`export`  
-└──`tslice`  
-`show`  
-├──`waterfall`  
-├──`tslice`  
-│&emsp;&emsp;└──`fft`  
-├──`fslice`  
-├──`ftot`  
-└──`ttot`  
+|command|arg1|arg2|arg3|
+|-|-|-|-|
+|`load`|filename: str|[object_name: str]||
+|`lo`|value: float|[object_name: str]||
+|`tslice`|value: float|[object_name: str]||
+|`fslice`|value: float|[object_name: str]||
+|`frange`|start_value: float|stop_value: float|[object_name: str]|
+|`trange`|start_value: float|stop_value: float|[object_name: str]|
+|`compute`||||
+|├──`tot`||||
+|├──`max`||||
+|├──`min`||||
+|├──`fslice`||||
+|│&emsp;&emsp;├──`tot`||||
+|│&emsp;&emsp;├──`max`||||
+|│&emsp;&emsp;└──`min`||||
+|└──`tslice`||||
+|&emsp;&emsp;├──`tot`||||
+|&emsp;&emsp;├──`max`||||
+|&emsp;&emsp;└──`min`||||
+|`show`||||
+|├──`waterfall`||||
+|├──`tslice`||||
+|│&emsp;&emsp;└──`fft`||||
+|├──`fslice`||||
+|├──`ftot`||||
+|└──`ttot`||||
+
+`object_name` is `.` by default. Hence, when not specified, command operate on the same object.

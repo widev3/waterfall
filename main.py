@@ -2,62 +2,57 @@ import sys
 
 sys.dont_write_bytecode = True
 
-# import argparse
+import os.path
+import argparse
 import commands
 
 
 setup = {
-    "data": {
+    "load": {
         "help": "File to load",
-        "type": [str, str],
+        "type": [str, str],  # file to load, object name
         "default": None,
-        "func": commands.data,
+        "func": commands.load,
     },
     "lo": {
         "help": "Local oscillator [Hz]",
-        "type": [float, str],
+        "type": [float, str],  # lo value, object name
         "default": 0,
         "func": commands.lo,
     },
     "show": {
         "help": "Show plot",
-        "type": [str, str],
+        "type": [str, str],  # plot type, object name
         "default": None,
         "func": commands.show,
     },
     "tslice": {
         "help": "Set time slice in the filename unit of measure",
-        "type": [float, str],
+        "type": [float, str],  # tslice value, object name
         "default": None,
         "func": commands.tslice,
     },
     "fslice": {
         "help": "Set frequency slice in the filename unit of measure",
-        "type": [float, str],
+        "type": [float, str],  # fslice value, object name
         "default": None,
         "func": commands.fslice,
     },
     "compute": {
         "help": "Call the compute module to perform calculations",
-        "type": [str, str, str],
+        "type": [str, str, str],  # ???
         "default": None,
         "func": commands.compute,
     },
-    "export": {
-        "help": "Plot to save in csv",
-        "type": [str],
-        "default": None,
-        "func": commands.export,
-    },
     "frange": {
         "help": "Frequency range",
-        "type": [float, float, str],
+        "type": [float, float, str],  # fstart, fstop, object name
         "default": None,
         "func": commands.frange,
     },
     "trange": {
         "help": "Time range",
-        "type": [float, float, str],
+        "type": [float, float, str],  # tstart, tstop, object name
         "default": None,
         "func": commands.trange,
     },
@@ -69,56 +64,36 @@ setup = {
     },
 }
 
-# parser = argparse.ArgumentParser(description="Waterfall")
-
-# for s in setup:
-#     if "type" in setup[s]:
-#         parser.add_argument(
-#             f"--{s}",
-#             help=setup[s]["help"],
-#             default=setup[s]["default"],
-#         )
-#     elif "action" in setup[s]:
-#         parser.add_argument(
-#             f"--{s}",
-#             help=setup[s]["help"],
-#             action=setup[s]["action"],
-#             default=setup[s]["default"],
-#         )
-
-# args = parser.parse_args()
+parser = argparse.ArgumentParser(description="Waterfall")
+parser.add_argument("--script", help="Script file to execute", type=str, default=None)
+ps = parser.parse_args()
 
 
-# just an empty class to setattr
+# just an empty class for setattr
 class Empty:
     pass
 
 
 args = Empty()
 
+l = []
+if ps.script:
+    if os.path.isfile(ps.script):
+        with open(ps.script) as f:
+            l = [line.rstrip() for line in f]
+
 idx = 0
 cmds = {}
-while True:
-    k = None
-    v = None
+while True if not l else idx < len(l):
     idx += 1
-    uin = input(f"{(idx):03} \U0001fa81 ")
-    uins = uin.split()
+    uins = (l[idx - 1] if l else input(f"{(idx):03} \U0001fa81 ")).split()
 
     if len(uins) == 0:
         continue
 
-    k = uins[0]
-    v = uins[1:]
+    (k, v) = (uins[0], uins[1:])
     if k not in setup:
-        idx += 1
-        if k in ["help"]:
-            print(f"{(idx):03} \U0001f393 helper")
-            print("Helper not implemented")
-            # parser.print_help()
-        else:
-            print(f"{(idx):03} \U0001fadf  command not found")
-
+        print(f"{(idx):03} \U0001fadf  {k}: command not found")
         continue
 
     v = [t(e) for e, t in zip(v, setup[k]["type"])]
