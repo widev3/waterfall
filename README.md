@@ -1,5 +1,11 @@
 # Waterfall
 
+## Plotters
+
+* `single_plotter.py` load a single `*.iq` file and plot the waterfall
+* `multi_plotter.py` load a list of `*.iq`s files and plot the waterfall
+* `multi_overlap_plotter.py` load a list of `*.iq`s files, eventually with some overlap, and plot the waterfall
+
 ## Build bash
 
 ```bash
